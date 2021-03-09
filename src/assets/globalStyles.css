@@ -1,0 +1,277 @@
+/* Global Styles */
+
+/* Solid border */
+hr.solid {
+	border-top: 3px solid #000;
+}
+
+/* for buttons start */
+.btn-outline-turquoise {
+	color: #1fc5b9;
+	border-color: #1fc5b9;
+	width: 100%;
+	max-width: 100%;
+	border-radius: 0;
+	border-width: 4px;
+	font-weight: bold;
+	font-family: 'Roboto', sans-serif;
+	padding: 8px 40px;
+	font-weight: bolder;
+}
+.btn-outline-turquoise:hover {
+	color: #000;
+	border-color: #1fc5b9;
+	width: 100%;
+	max-width: 100%;
+	border-radius: 0;
+	border-width: 4px;
+	font-weight: bold;
+	font-family: 'Roboto', sans-serif;
+	padding: 8px 40px;
+	font-weight: bolder;
+	background: #1fc5b9;
+}
+.btn-outline-black {
+	color: #000;
+	border-color: #000;
+	width: 100%;
+	max-width: 100%;
+	border-radius: 0;
+	border-width: 4px;
+	font-weight: bold;
+	font-family: 'Roboto', sans-serif;
+	padding: 8px 40px;
+	font-weight: bolder;
+}
+.btn-outline-black:hover {
+	color: #fff;
+	border-color: #000;
+	width: 100%;
+	max-width: 100%;
+	border-radius: 0;
+	border-width: 4px;
+	font-weight: bold;
+	font-family: 'Roboto', sans-serif;
+	padding: 8px 40px;
+	font-weight: bolder;
+	background: #000;
+}
+.btn-outline-light {
+	color: #f8f9fa;
+	border-color: #fff;
+	width: 100%;
+	max-width: 100%;
+	border-radius: 0;
+	border-width: 4px;
+	font-weight: bold;
+	font-family: 'Roboto', sans-serif;
+	padding: 8px 40px;
+	font-weight: bolder;
+}
+.btn-outline-light:hover {
+	color: #000;
+	border-color: #fff;
+	width: 100%;
+	max-width: 100%;
+	border-radius: 0;
+	border-width: 4px;
+	font-weight: bold;
+	font-family: 'Roboto', sans-serif;
+	padding: 8px 40px;
+	font-weight: bolder;
+	background-color: #fff;
+}
+.btn:focus {
+	box-shadow: none;
+}
+/* for buttons end */
+
+/* black background */
+.att-black {
+	background-color: #000;
+}
+/* off white background */
+.att-off-white {
+	background-color: rgb(238, 238, 238);
+}
+/* typography start */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+h7 {
+	font-family: 'Roboto', sans-serif;
+}
+h1 {
+	width: 100%;
+	max-width: 80%;
+	margin: 0 auto;
+	padding-bottom: 20px;
+	text-shadow: none;
+}
+
+h3 {
+	font-size: 36px;
+}
+h4 {
+	font-size: 24px;
+}
+h5 {
+	font-size: 16px;
+}
+
+h4 {
+	text-shadow: none;
+}
+/* typography end */
+
+/* heart-icon start */
+.heart_icon {
+	color: #000;
+}
+.heart_icon:hover {
+	color: #1fc5b9;
+}
+.heart_icon_white {
+	color: #fff;
+}
+.heart_icon_white:hover {
+	color: #1fc5b9;
+}
+/* heart-icon end */
+
+.att-padding-container {
+	padding-left: 50px;
+	padding-right: 50px;
+	margin: 0 auto;
+}
+.att-pt-35 {
+	padding-top: 35px;
+}
+.att-pt-50 {
+	padding-top: 50px;
+}
+.att-pt-80 {
+	padding-top: 80px;
+}
+.att-pt-100 {
+	padding-top: 100px;
+}
+.att-pb-10 {
+	padding-bottom: 10px;
+}
+
+.att-pb-20 {
+	padding-bottom: 20px;
+}
+.att-pb-35 {
+	padding-bottom: 35px;
+}
+.att-pb-50 {
+	padding-bottom: 50px;
+}
+.att-pb-50 {
+	padding-bottom: 100px;
+}
+.att-pl-0 {
+	padding-left: 0;
+}
+.att-pr-0 {
+	padding-right: 0;
+}
+.att-text-align-left {
+	text-align: left;
+}
+.att-text-align-right {
+	text-align: right;
+}
+.att-text-align-center {
+	text-align: center;
+}
+.att-black-color {
+	color: #000;
+}
+.att-white-color {
+	color: #fff;
+}
+
+.att-turquoise-color {
+	color: #1fc5b9;
+}
+.att-font-weight-600 {
+	font-weight: 600;
+}
+.att-font-weight-700 {
+	font-weight: 700;
+}
+.att-font-weight-900 {
+	font-weight: 900;
+}
+p {
+	margin-top: 0;
+	margin-bottom: 1rem;
+	font-size: 14px;
+}
+
+/* card start */
+.att-card-title {
+	text-align: left;
+}
+
+.text-14 {
+	font-size: 14px;
+}
+
+.text-16 {
+	font-size: 16px;
+}
+
+.text-12 {
+	font-size: 12px;
+}
+
+.text-15 {
+	font-size: 15px;
+}
+.text-footer-card {
+	color: #000000;
+	font-weight: bold;
+}
+/* card end */
+
+/* media querry - Responsive */
+
+@media only screen and (max-width: 1090px) {
+	.attnav-item-li {
+		font-weight: 900;
+		font-size: 14px;
+		padding-left: 5px;
+	}
+	.btn {
+		font-size: 14px;
+		padding: 8px 20px;
+	}
+}
+@media only screen and (max-width: 1211px) {
+	.attnav-item-li {
+		font-weight: 900;
+		font-size: 14px;
+		padding-left: 5px;
+	}
+}
+@media only screen and (max-width: 1330px) {
+	.attnav-item-li {
+		font-weight: 900;
+		font-size: 16px;
+		padding-left: 10px;
+	}
+}
+@media only screen and (max-width: 768px) {
+	.top-right {
+		position: absolute;
+		top: -140%;
+		right: -18%;
+	}
+}
