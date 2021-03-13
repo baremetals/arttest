@@ -1,12 +1,15 @@
 <template>
   <div>
-      <h1>Voting Page</h1>
+      <ResetPassword />
   </div>
 </template>
 
 <script>
+import ResetPassword from '@/auth/ResetPassword.vue'
 export default {
-
+  components: {
+    ResetPassword
+  }
 }
 </script>
 

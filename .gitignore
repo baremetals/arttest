@@ -30,7 +30,7 @@ yarn-error.log*
 
 # production
 /build
-/src/utils/config
+/src/config
 
 # misc
 

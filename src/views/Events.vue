@@ -1,6 +1,6 @@
 <template>
   <div>
-     <h1>Events Page</h1> 
+     Events Page 
   </div>
 </template>
 

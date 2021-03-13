@@ -16,7 +16,12 @@
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.17.3",
     "core-js": "^3.6.5",
+    "date-fns": "^2.19.0",
+    "mdbvue": "^6.7.2",
+    "moment": "^2.29.1",
     "vue": "^2.6.11",
+    "vue-dayjs": "^1.0.2",
+    "vue-moment": "^4.1.0",
     "vue-router": "^3.5.1",
     "vuex": "^3.4.0"
   },

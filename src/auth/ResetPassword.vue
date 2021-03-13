@@ -9,23 +9,10 @@
         <b-col class="att-form" lg="6" md="8">
           <b-card no-body class="border-0">
             <div>
-              <h4  class="text-black">Sign In</h4>
+              <h4  class="text-black">Reset Password</h4>
             </div>
             <hr style="border-top: 2px solid #1fc5b9">
             <b-form @submit="onSubmit" v-if="show" class="att-form-body">
-              <b-form-group
-                id="email-group"
-                label-for="email"
-              >             
-                <b-form-input
-                  id="email"
-                  v-model="model.email"
-                  type="email"
-                  placeholder="Enter email"
-                  required
-                ></b-form-input>
-                <fa-icon class="att-f-icons" :icon="['fas', 'at']"/>
-              </b-form-group>
               
               <b-form-group
                 id="password-group"
@@ -41,13 +28,24 @@
                 </b-form-input>
                 <fa-icon class="att-f-icons" :icon="['fas', 'lock']"/>
               </b-form-group> 
-
-                   
-              <b-button type="submit" variant="outline-turquoise">Sign in</b-button>
-              <p><span><router-link to="/auth-forgotpassword">forgot password</router-link></span></p>
+              <b-form-group
+                id="confirmPassword-group"
+                label-for="confirmPassword"
+              >
+                <b-form-input
+                  id="confirmPassword"
+                  v-model="model.confirmPassword"
+                  type="password"
+                  placeholder="Confirm paswword"
+                  required
+                ></b-form-input>
+                <fa-icon class="att-f-icons" :icon="['fas', 'lock']"/>
+              </b-form-group>           
+              
+              <b-button type="submit" variant="outline-turquoise">Change password</b-button>
             </b-form>
             <div>
-              <p><span class="text-muted">Don't have an account? <router-link to="/auth-signup">Create an account</router-link></span></p>
+              <p><span class="text-muted">Bact to <router-link to="/auth-login">Signin</router-link></span></p>
             </div>
           </b-card>
         </b-col>
@@ -61,8 +59,8 @@ export default {
   data() {
     return {
       model: {
-        email: "",
         password: "",
+        confirmPassword: "",
       },
       
       show: true,
@@ -87,10 +85,6 @@ export default {
   padding-bottom: 20px;
 }
 h4, p {
-  text-align: center;
-  padding-top: 2px;
-}
-h4 {
   text-align: center;
   padding-top: 20px;
 }

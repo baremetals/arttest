@@ -110,6 +110,8 @@ h1 {
 	margin: 0 auto;
 	padding-bottom: 20px;
 	text-shadow: none;
+	/* font-family: 'BellinzoBold'; */
+    font-weight: 700;
 }
 
 h3 {

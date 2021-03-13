@@ -120,7 +120,7 @@ export const users = [
         username: 'frandmason',
     },
     {
-        id: 1,
+        id: 4,
         img: bb14,
         bio: '',
         name: 'Ganldolf DaGraet',

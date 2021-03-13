@@ -9,10 +9,15 @@
         <b-col class="att-form" lg="6" md="8">
           <b-card no-body class="border-0">
             <div>
-              <h4  class="text-black">Sign In</h4>
+              <h4  class="text-black">Forgot Password</h4>              
+            </div>
+            <div class="reset-text">
+              <p>Please enter the email address associated with your account and
+                we will email you a link to reset your password. </p>
             </div>
             <hr style="border-top: 2px solid #1fc5b9">
             <b-form @submit="onSubmit" v-if="show" class="att-form-body">
+                    
               <b-form-group
                 id="email-group"
                 label-for="email"
@@ -25,29 +30,13 @@
                   required
                 ></b-form-input>
                 <fa-icon class="att-f-icons" :icon="['fas', 'at']"/>
-              </b-form-group>
-              
-              <b-form-group
-                id="password-group"
-                label-for="password"    
-              >
-                <b-form-input
-                  id="password"
-                  v-model="model.password"
-                  type="password"
-                  placeholder="Enter pasword"
-                  required                 
-                >                
-                </b-form-input>
-                <fa-icon class="att-f-icons" :icon="['fas', 'lock']"/>
               </b-form-group> 
 
                    
-              <b-button type="submit" variant="outline-turquoise">Sign in</b-button>
-              <p><span><router-link to="/auth-forgotpassword">forgot password</router-link></span></p>
+              <b-button type="submit" variant="outline-turquoise">Reset Password</b-button>
             </b-form>
             <div>
-              <p><span class="text-muted">Don't have an account? <router-link to="/auth-signup">Create an account</router-link></span></p>
+              <p><span class="text-muted">Back? <router-link to="/auth-login">sigin in</router-link></span></p>
             </div>
           </b-card>
         </b-col>
@@ -62,7 +51,6 @@ export default {
     return {
       model: {
         email: "",
-        password: "",
       },
       
       show: true,
@@ -86,7 +74,13 @@ export default {
   padding-top: 20px;
   padding-bottom: 20px;
 }
-h4, p {
+.reset-text {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  text-align: auto;
+}
+p {
   text-align: center;
   padding-top: 2px;
 }
@@ -96,9 +90,6 @@ h4 {
 }
 a:link, a:visited {
   color: #1fc5b9;
-}
-checkbox:checked {
-  background-color: #1fc5b9
 }
 .att-f-icons {
   padding: 5px;
@@ -113,15 +104,6 @@ checkbox:checked {
   text-align: center;
   position: relative;
   bottom: 35px;
-}
-.att-f-icons:hover {
-	color: #1fc5b9;
-}
-.att-f-icons_white {
-	color: #fff;
-}
-.att-f-icons_white:hover {
-	color: #1fc5b9;
 }
 input {
   padding-left: 40px;

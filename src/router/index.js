@@ -1,11 +1,16 @@
 //Main Header
 import Home from '@/views/Home.vue'
 import Contests from '@/views/Contests.vue'
+import ContestDetails from '@/views/ContestDetails.vue'
 import Events from '@/views/Events.vue'
 import Explore from '@/views/Explore.vue'
 import Blogs from '@/views/Blogs.vue'
+
+// Auth Routes
 import Login from '@/auth/Login.vue'
 import SignUp from '@/auth/SignUp.vue'
+import ForgotPassword from '@/auth/ForgotPassword.vue'
+import ResetPassword from '@/auth/ResetPassword.vue'
 
 //Menu Routes
 import UserProfile from '@/views/UserProfile.vue'
@@ -29,14 +34,13 @@ const routes = [
     path: '/contests',
     name: 'Contests-Page',
     component: Contests,
-    // props: ['contestId']
   },
-  // {
-  //   path: '/contest-details',
-  //   name: 'ContestDetails-Page',
-  //   component: ContestDetails,
-  //   props: true
-  // },
+  {
+    path: '/contests/:contestId',
+    name: 'ContestDetails-Page',
+    component: ContestDetails,
+    props: true
+  },
   {
     path: '/events',
     name: 'Events-Page',
@@ -52,6 +56,8 @@ const routes = [
     name: 'Blogs-Page',
     component: Blogs
   },
+
+  //auth
   {
     path: '/auth-login',
     name: 'Login-Page',
@@ -61,6 +67,16 @@ const routes = [
     path: '/auth-signup',
     name: 'Signup-Page',
     component: SignUp
+  },
+  {
+    path: '/auth-resetpassword/:token',
+    name: 'Reset-Password-Page',
+    component: ResetPassword
+  },
+  {
+    path: '/auth-forgotpassword',
+    name: 'Forgot-Password-Page',
+    component: ForgotPassword
   },
 
   // Menu Routes
@@ -97,5 +113,6 @@ const routes = [
     component: Terms
   },
 ]
+
 
 export default routes
