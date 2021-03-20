@@ -28,7 +28,7 @@ const actions = {
 
 const getters = {
     contests: state => state.contests,
-    contestFromId: (state) =>  (contestId) =>{
+    contestFromId: (state) =>  (contestId) => {
         return state.contests.find(contest => contest.contestId === contestId)
     }
 }
@@ -38,6 +38,6 @@ const contestModule = {
     mutations,
     actions,
     getters
-  }
+}
   
   export default contestModule;

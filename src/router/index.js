@@ -7,13 +7,12 @@ import Explore from '@/views/Explore.vue'
 import Blogs from '@/views/Blogs.vue'
 
 // Auth Routes
-import Login from '@/auth/Login.vue'
 import SignUp from '@/auth/SignUp.vue'
 import ForgotPassword from '@/auth/ForgotPassword.vue'
 import ResetPassword from '@/auth/ResetPassword.vue'
 
 //Menu Routes
-import UserProfile from '@/views/UserProfile.vue'
+import CreatorProfile from '@/views/CreatorProfile.vue'
 import Voting from '@/views/Voting.vue'
 
 //Footer
@@ -39,7 +38,7 @@ const routes = [
     path: '/contests/:contestId',
     name: 'ContestDetails-Page',
     component: ContestDetails,
-    props: true
+    props: true,
   },
   {
     path: '/events',
@@ -58,11 +57,6 @@ const routes = [
   },
 
   //auth
-  {
-    path: '/auth-login',
-    name: 'Login-Page',
-    component: Login
-  },
   {
     path: '/auth-signup',
     name: 'Signup-Page',
@@ -86,9 +80,12 @@ const routes = [
     component: Voting
   },
   {
-    path: '/user-profile',
+    path: '/creator-profile',
     name: 'UserProfile-Page',
-    component: UserProfile
+    component: CreatorProfile,
+    meta: {
+      requiresAuth: true
+    }
   },
 
   //Footer Routes

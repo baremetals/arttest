@@ -16,7 +16,7 @@
       <b-navbar-nav class="ml-auto">
         <b-nav-item href="#"> </b-nav-item>
         <b-navbar-nav class="attnav-container">
-          <b-nav-item class="attnav-item-li">
+          <b-nav-item to="/creator-profile" class="attnav-item-li">
             <b-img src="@/assets/images/home.png" alt="Right image"></b-img>
             <p
               style="
@@ -29,7 +29,7 @@
               Home
             </p>
           </b-nav-item>
-          <b-nav-item class="attnav-item-li" v-b-modal.modal-1>
+          <b-nav-item class="attnav-item-li">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24.075"
@@ -71,7 +71,7 @@
           </b-nav-item>
           <b-nav-item
             class="attnav-item-li"
-            href="#"
+            to="/"
             style="margin-left: -13px"
           >
             <b-img src="@/assets/images/vote.png" alt="Right image"></b-img>
@@ -88,6 +88,7 @@
             </p>
           </b-nav-item>
           <b-nav-item
+            v-b-modal.modal-1
             class="attnav-item-li"
             href="#"
             style="margin-left: -13px"
@@ -126,7 +127,7 @@
               Notification
             </p>
           </b-nav-item>
-          <b-nav-item class="attnav-item-li" href="#">
+          <b-nav-item class="attnav-item-li" >
             <b-img
               src="@/assets/images/Ellipse -3.png"
               alt="Right image"
@@ -140,6 +141,11 @@
                 </b-nav-item> -->
         <b-nav-item href="#">
           <!-- <b-img src="@/assets/images/Ellipse -3.png" alt="Right image"></b-img> -->
+        </b-nav-item>
+        <b-nav-item>
+          <b-button @click="logout" variant="outline-info" class="mb-2">
+          <b-icon  icon="power" aria-hidden="true"></b-icon> Logout
+      </b-button>
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
@@ -168,13 +174,19 @@ import UploadImage from "@/components/UploadImage.vue";
 import WriteStory  from "@/components/WriteStory.vue";
 import UploadVideo from "@/components/UploadVideo.vue";
 import UploadFile  from "@/components/UploadFile.vue";
+import { LOGOUT_USER } from "@/store/MutationTypes";
 export default {
+    name: 'Menu',
     components: {
       UploadImage,
       WriteStory,
       UploadVideo,
-      UploadFile
+      UploadFile,
     },
+    // computed: {
+      
+    // },
+    
     data() {
       return {
         tabIndex: 0
@@ -187,7 +199,10 @@ export default {
         } else {
           return ['bg-light', 'text-info']
         }
-      }
+      },
+      logout() {
+        return this.$store.dispatch(LOGOUT_USER)
+    },
     }
 };
 </script>

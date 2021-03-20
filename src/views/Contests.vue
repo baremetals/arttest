@@ -25,9 +25,9 @@ import ForContestPage from '@/components/ForContestPage.vue'
       'contests'
     ])
   },
-  created() {
-    return this.$store.dispatch('getAllContests');
-  },
+  // created() {
+  //   return this.$store.dispatch('getAllContests');
+  // },
     components: {
       ForContestPage
     }

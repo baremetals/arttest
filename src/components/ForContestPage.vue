@@ -31,13 +31,31 @@
         <b-row>
             <b-col>
                 <b-card-text class="att-black-color att-pb-20">
-                    A virtual Marathon / Cyclothon is a challenge you give yourself to reach a designated goal...
+                    {{ contest.description }}
                 </b-card-text>
             </b-col>
         </b-row>
         <b-row>
             <b-col col lg="12">
-                <h5 class="att-pb-20"><span class="att-black-color att-font-weight-900"> Entry Deadline: </span><span style="font-size: 24px;" class="att-turquoise-color">23hrs 40m 19s</span></h5>
+                <h5 class="att-pb-20"><span class="att-black-color att-font-weight-900"> Entry Deadline: </span><span style="font-size: 24px;" class="att-turquoise-color">
+                    <!-- <CountDownTimer
+                        :start-time="1609081200000"
+                        :end-time="1616857200000"
+                    /> -->
+                    <vue-countdown-timer
+      @start_callback="startCallBack('event started')"
+      @end_callback="endCallBack('event ended')"
+      :start-time="contest.startDate"
+      :end-time="contest.entryEndDate"
+      :interval="1000"
+      label-position="begin"
+      :end-text="'Event ended!'"
+      :day-txt="'days'"
+      :hour-txt="'hours'"
+      :minutes-txt="'minutes'"
+      :seconds-txt="'seconds'">
+    </vue-countdown-timer> 
+                    </span></h5>
             </b-col>
             <b-col class="att-text-align-right att-black-color" col lg="3"></b-col>
         </b-row>
@@ -55,9 +73,21 @@
 </template>
 
 <script>
+// import CountDownTimer from '@/components/CountDownTimer.vue'
 export default {
     name: 'ForContestPage',
     props: ['contest'],
+    components: {
+        // CountDownTimer
+    },
+    methods: {
+    startCallBack: function(x) {
+      console.log(x);
+    },
+    endCallBack: function(x) {
+      console.log(x);
+    },
+  },
 }
 </script>
 

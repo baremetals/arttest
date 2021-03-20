@@ -20,7 +20,7 @@
       </b-row>
       <b-row>
         <!-- Latest News and Events Card 1 -->
-        <b-col sm="12" md="6" lg="4" xl="3" v-for="post in blogposts" :key="post.blogpostsId"
+        <b-col sm="12" md="6" lg="4" xl="3" v-for="post in GET_BLOGS" :key="post.blogpostsId"
           ><div class="att-pb-20">
             <Blogs :post="post"/>
           </div></b-col
@@ -31,18 +31,19 @@
 </template>
 
 <script>
+// import { GET_ALL_BLOG_POST } from '@/store/MutationTypes'
 import { mapGetters } from 'vuex';
 import Blogs from '@/components/PostCard.vue'
 export default {
   name: 'Blogs-Page',
   computed: {
     ...mapGetters([
-      'blogposts'
+      'GET_BLOGS'
     ])
   },
-  created() {
-    this.$store.dispatch('getAllBlogPosts');
-  },
+  // mounted() {
+  //   this.$store.dispatch(GET_ALL_BLOG_POST);
+  // },
   components: {
     Blogs
   },

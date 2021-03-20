@@ -1,12 +1,15 @@
 <template>
   <div class="explore">
-     <h1>Explore page</h1> 
+     <SocialShare /> 
   </div>
 </template>
 
 <script>
+import SocialShare from '@/layouts/SocialShare.vue'
 export default {
-
+  components: {
+    SocialShare
+  }
 }
 </script>
 

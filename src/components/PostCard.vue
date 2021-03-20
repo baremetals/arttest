@@ -18,8 +18,9 @@
                 </b-col>
                 <b-col class="att-text-align-right att-white-color" col lg="3">
 
-            <div><span style="padding-right: 5px">{{ post.likeCount}}</span><a href="javascript:void(0);" class="heart_icon_white">
-                    <fa-icon :icon="['far', 'heart']"/>
+            <div><span style="padding-right: 5px">{{ post.likeCount}}</span><a href="javascript:void(0);" >
+                    <fa-icon class="heart_icon_white" :icon="['far', 'heart']"/>
+                    <fa-icon class="att-heart-icon-filled" :icon="['fas', 'heart']"/>
                 </a></div>
             </b-col>
               </b-row>

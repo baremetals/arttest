@@ -39,9 +39,11 @@
           </b-list-group-item>
         </div>
         <div class="right">
-          <a href="javascript:void(0);" class="share_btn">
+          
+            <a href="javascript:void(0);" class="share_btn">
             <fa-icon :icon="['fas', 'share-alt']" />
           </a>
+          
         </div>
         <div></div>
       </b-carousel-slide>
@@ -52,7 +54,7 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-col cols="3"> </b-col>
         <b-col cols="6">
-          <b-navbar-nav class="ml-auto navvy">
+          <b-navbar-nav class="ml-auto ">
              
             <b-col>
               <b-nav-item href="#details" style="color: #000000; font-weight: 800">

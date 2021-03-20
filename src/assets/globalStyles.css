@@ -142,6 +142,9 @@ h4 {
 .heart_icon_white:hover {
 	color: #1fc5b9;
 }
+.att-heart-icon-filled {
+	color: #b6800b
+}
 /* heart-icon end */
 
 .att-padding-container {
