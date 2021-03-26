@@ -40,3 +40,7 @@ export default {
   maxLength,
   emailFormat
 }
+
+The username field must be at least 4 characters
+The username field may contain alpha-numeric characters as well as dashes and underscores
+The username field is required

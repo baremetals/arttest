@@ -1,0 +1,23 @@
+export const categories = [
+    'art',
+    'photography',
+    'short film',
+    'digital art',
+    'abstract',
+    'architecture',
+    'long exposure',
+    'fashion',
+    'music',
+    'black & white',
+    'nature photography',
+    'manipulations',
+    'city photography',
+    'technology',
+    'design & tech',
+    'food photography',
+    'action photography',
+    'web apps',
+    'mobile apps',
+    'bursery',
+    'social media'
+]

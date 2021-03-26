@@ -4,7 +4,7 @@
     <h4 class="att-pb-35 att-pt-100 att-text-align-left att-black-color" style="padding-bottom: 35px;">All | <a style="color: #000;" href="#">Live Contests</a></h4>
     <b-row>
       <!-- Contest Card 1 -->
-    <b-col sm="12" md="6" lg="4" xl="3" v-for="contest in contests" v-bind:key="contest.id">
+    <b-col sm="12" md="6" lg="4" xl="3" v-for="contest in contestsSliced" v-bind:key="contest.contestId">
         <div class="att-pb-20">
         <b-card 
     img-src="@/assets/images/arttest-placeholder-image.jpg"
@@ -59,13 +59,19 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { contests } from '@/utils/data'
 export default {
     data () {
         return {
             contests
         }
-    }
+    },
+    computed: {
+    ...mapGetters([
+      'contestsSliced'
+    ])
+  },
 }
 </script>
 

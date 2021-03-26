@@ -23,7 +23,7 @@
 </template>
 
 <script>
-
+// import { mapGetters } from 'vuex';
 // @ is an alias to /src
 import Slider from '@/components/Slider.vue'
 import ContestCard from '@/components/ContestCard.vue'
@@ -36,6 +36,11 @@ export default {
     ContestCard,
     NewsCard,
     UserCard 
+  },
+  computed: {
+    // ...mapGetters([
+    //   'contestsSliced'
+    // ])
   },
 }
 </script>

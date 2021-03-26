@@ -10,3 +10,14 @@ library.add(faUserSecret, faShareAlt, faFontAwesome, faFacebookF, faTwitter, faT
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('fa-icon', FontAwesomeIcon)
+
+
+
+
+
+
+
+
+
+
+

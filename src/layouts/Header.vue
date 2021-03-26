@@ -38,7 +38,7 @@ export default {
 
 
 <!-- Header Css Start -->
-<style>
+<style scoped>
     .navbar {
     padding: 1rem 1.5rem;
     position: fixed;

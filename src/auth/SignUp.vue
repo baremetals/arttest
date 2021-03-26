@@ -1,5 +1,11 @@
 <template>
   <div>
+    <!-- model start -->
+    <b-modal v-model="modalShow" title="Thanks for registering with arttest">
+      Please check the email address you provided to verify your account!
+    </b-modal>
+    <!-- model end -->
+
     <b-row>
       <b-col sm="12" md="6" lg="4" xl="6" class="padding-0">
         <div class="hero-image-left"></div>
@@ -15,215 +21,286 @@
               <div>
                 <b-tabs content-class="mt-3" fill>
                   <b-tab class="active-tab-class" title="Sign Up">
-                    <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
-                    <b-form @submit.prevent="handleSubmit(onRegister)" class="att-form-body">
-
-                      <div v-if="generalError"
-                        class="alert alert-danger" role="alert"
+                    <!-- REGISTRTION SECTION START -->
+                    <ValidationObserver ref="observer">
+                      <b-form
+                        slot-scope="{ validate }"
+                        @submit.prevent="validate().then(onRegister)"
+                        class="att-form-body"
+                      >
+                        <div
+                          v-if="generalError"
+                          class="alert alert-danger"
+                          role="alert"
                         >
-                           The email address provided is already in use.
+                          The email address provided is already in use.
                         </div>
-                        <ValidationProvider name="email" :rules="{required: true, email}" v-slot="{ errors }"> 
-                      <b-form-group
-                        id="email-group"
-                        label-for="email"
-                        description=""
-                      ><span>{{ errors[0] }}</span>
-                        <b-form-input
-                          id="email"
-                          v-model.trim="newUserData.email"
-                          type="email"
-                          placeholder="Email Address"
-                        ></b-form-input>
-                      </b-form-group>
+                        <ValidationProvider name="email" rules="required|email">
+                          <b-form-group
+                            slot-scope="{ valid, errors }"
+                            id="email-group"
+                            label-for="email"
+                            description=""
+                          >
+                            <b-form-input
+                              id="email"
+                              v-model.trim="newUserData.email"
+                              :state="errors[0] ? false : valid ? true : null"
+                              type="email"
+                              placeholder="Email Address"
+                            ></b-form-input>
+                            <b-form-invalid-feedback id="inputLiveFeedback">
+                              {{ errors[0] }}
+                            </b-form-invalid-feedback>
+                          </b-form-group>
                         </ValidationProvider>
-                        <ValidationProvider name="username" :rules="{required: true, min: 3, max: 15, alpha_dash}" v-slot="{ errors }"> 
-                      <b-form-group
-                        id="username-group"
-                        label-for="username"
-                        prepend=""
-                      ><span>{{ errors[0] }}</span>
-                        <b-form-input
-                          id="username"
-                          v-model.trim="newUserData.username"
-                          type="text"
-                          placeholder="Username"
-                        ></b-form-input>
-                      </b-form-group>
-                      </ValidationProvider>
-                      <div
-                        v-bind:class="
-                          filteredUsernames ? 'arttest' : 'arttest-trill'
-                        "
-                      >
-                        {{ newUserData.username }}
-                      </div>
-                      <br />                      
-                      <!-- <b-form-group
-                        id="dob-group"
-                        label="Date of Birth:"
-                        label-for="dob"
-                        ><span>{{ errors[0] }}</span><br>
-                        <b-row>
-                          <b-col sm="4">
-                            
-                            <b-form-select
-                              v-model="date_selected"
-                              :options="date_options"
-                              class="form-control dob-style"
-                              required
-                            ></b-form-select
-                           
-                          ></b-col>
-                          <b-col sm="4"
-                            ><b-form-select
-                              v-model="month_selected"
-                              :options="month_options"
-                              class="form-control dob-style"
-                              required
-                            ></b-form-select
-                          ></b-col>
-                          <b-col sm="4"
-                            ><b-form-select
-                              v-model="year_selected"
-                              :options="year_options"
-                              class="form-control dob-style"
-                              required
-                            ></b-form-select
-                          ></b-col>
-                        </b-row>
-                      </b-form-group> -->
-                      
-                      <ValidationProvider name="dobCheck" :rules="{required: true}" v-slot="{ errors }">
-                      <b-form-group
-                      style="display: none"
-                        id="confirmDob"
-                        v-slot="{ ariaDescribedby }"
-                      ><span>{{ errors[0] }}</span>
-                        <b-form-checkbox
-                          v-model="newUserData.dobCheck"
-                          id="confirmDob"
-                          :aria-describedby="ariaDescribedby"
-                          style="display: block"
-                          value="dobConfirmed"
-                          >Please confirm you have parental
-                          consent</b-form-checkbox
+                        <ValidationProvider
+                          name="username"
+                          rules="required|min:4|max:15|customUsername|uniqueUsername"
                         >
-                      </b-form-group>
-                    </ValidationProvider>
-                    <ValidationProvider name="password" :rules="{required: true, min:6}" v-slot="{ errors }">
-                      <b-form-group id="password-group" label-for="password">
-                        <span>{{ errors[0] }}</span>
-                        <b-form-input
-                          id="password"
-                          v-model.trim="newUserData.password"
-                          type="password"
-                          placeholder="Enter Password"
-                        >
-                        </b-form-input>
-                      </b-form-group>
-                      </ValidationProvider>
-                      <ValidationProvider name="confirmPassword" :rules="{required: true, confirmed: password}" v-slot="{ errors }">
-                      <b-form-group
-                        id="confirmPassword-group"
-                        label-for="confirmPassword"
-                      ><span>{{ errors[0] }}</span>
-                        <b-form-input
-                          id="confirmPassword"
-                          v-model.trim="newUserData.confirmPassword"
-                          type="password"
-                          placeholder="Confirm Password"
-                        ></b-form-input>
-                      </b-form-group>
+                          <b-form-group
+                            slot-scope="{ valid, errors }"
+                            id="username-group"
+                            label-for="username"
+                            prepend=""
+                          >
+                            <b-form-input
+                              v-bind:style="{ color: 'checkUsername' }"
+                              id="username"
+                              v-model.trim="newUserData.username"
+                              :state="errors[0] ? false : valid ? true : null"
+                              type="text"
+                              placeholder="Username"
+                            ></b-form-input>
+                            <b-form-invalid-feedback id="inputLiveFeedback">
+                              {{ errors[0] }}
+                            </b-form-invalid-feedback>
+                          </b-form-group>
                         </ValidationProvider>
-                        <ValidationProvider name="confirmPassword" :rules="{required: true}" v-slot="{ errors }">
-                      <b-form-group
-                        id="terms-group"
-                        v-slot="{ ariaDescribedby }"
-                      ><span>{{ errors[0] }}</span>
-                        <b-form-checkbox
-                          value="acceptedTerms"
-                          v-model="newUserData.terms"
-                          id="terms"
-                          :aria-describedby="ariaDescribedby"
-                          ><p class="prtxt">
-                            By clicking Sign Up, you agree to our
-                            <span class="text-primary"
-                              ><router-link to="/terms"
-                                >Terms</router-link
-                              ></span
-                            >, Learn how we collect, use and share your data in
-                            our<span class="text-primary"
-                              ><router-link to="/privacy">
-                                Data Policy</router-link
-                              ></span
+                        <div
+                          v-bind:class="
+                            filteredUsernames ? 'arttest' : 'arttest-trill'
+                          "
+                        >
+                          {{ newUserData.username }}
+                        </div>
+                        <br />
+
+                        <b-form-group
+                          id="dob-group"
+                          label="Date of Birth:"
+                          label-for="dob"
+                        >
+                          <b-row>
+                            <b-col sm="4">
+                              <b-form-select
+                                v-model="newUserData.date_selected"
+                                :options="date_options"
+                                class="form-control dob-style"
+                              ></b-form-select
+                            ></b-col>
+                            <b-col sm="4"
+                              ><b-form-select
+                                v-model="newUserData.month_selected"
+                                :options="month_options"
+                                class="form-control dob-style"
+                              ></b-form-select
+                            ></b-col>
+                            <b-col sm="4"
+                              ><b-form-select
+                                @change="dobCheck()"
+                                id="year"
+                                v-model="newUserData.year_selected"
+                                :options="year_options"
+                                class="form-control dob-style"
+                              ></b-form-select
+                            ></b-col>
+                          </b-row>
+                        </b-form-group>
+
+                        <ValidationProvider name="dobCheck" rules="required">
+                          <b-form-group
+                            slot-scope="{ valid, errors }"
+                            id="confirmDob-group"
+                          >
+                            <b-form-checkbox
+                              v-model="newUserData.dobCheck"
+                              :state="errors[0] ? false : valid ? true : null"
+                              id="confirmDob"
+                              v-if="showDobChcekBox"
+                              value="dobConfirmed"
+                              class="arttest"
+                              >Please confirm you have parental
+                              consent</b-form-checkbox
                             >
-                            and how we use cookies and similar technology in our
-                            <span class="text-primary"
-                              ><router-link to="/privacy"
-                                >Cookies policy</router-link
-                              ></span
+                          </b-form-group>
+                        </ValidationProvider>
+                        <ValidationProvider
+                          name="password"
+                          rules="required"
+                          vid="password"
+                        >
+                          <b-form-group
+                            slot-scope="{ valid, errors }"
+                            id="password-group"
+                            label-for="password"
+                          >
+                            <b-form-input
+                              id="password"
+                              v-model.trim="newUserData.password"
+                              :state="errors[0] ? false : valid ? true : null"
+                              type="password"
+                              placeholder="Enter Password"
                             >
-                            . You may receive SMS notification from us and can
-                            opt at any time.
-                          </p>
-                        </b-form-checkbox>
-                      </b-form-group>
-                      </ValidationProvider>
-                      <b-button
-                        @click="onRegister(newUserData)"
-                        type="submit"
-                        variant="outline-turquoise-solid"
-                        >CREATE ACCOUNT</b-button
-                      >
-                    </b-form>
+                            </b-form-input>
+                            <b-form-invalid-feedback id="inputLiveFeedback">
+                              {{ errors[0] }}
+                            </b-form-invalid-feedback>
+                          </b-form-group>
+                        </ValidationProvider>
+                        <ValidationProvider
+                          name="confirm Password"
+                          rules="required|confirmed:password"
+                        >
+                          <b-form-group
+                            slot-scope="{ valid, errors }"
+                            id="confirmPassword-group"
+                            label-for="confirmPassword"
+                          >
+                            <b-form-input
+                              id="confirmPassword"
+                              v-model.trim="newUserData.confirmPassword"
+                              :state="errors[0] ? false : valid ? true : null"
+                              type="password"
+                              placeholder="Confirm Password"
+                            ></b-form-input>
+                            <b-form-invalid-feedback id="inputLiveFeedback">
+                              {{ errors[0] }}
+                            </b-form-invalid-feedback>
+                          </b-form-group>
+                        </ValidationProvider>
+
+                        <ValidationProvider
+                          name="acceptedTerms"
+                          rules="required"
+                        >
+                          <b-form-group
+                            slot-scope="{ valid, errors }"
+                            id="terms-group"
+                          >
+                            <b-form-checkbox
+                              value="acceptedTerms"
+                              v-model="newUserData.terms"
+                              :state="errors[0] ? false : valid ? true : null"
+                              id="terms"
+                              ><p class="prtxt">
+                                By clicking Sign Up, you agree to our
+                                <span class="text-primary"
+                                  ><router-link to="/terms"
+                                    >Terms</router-link
+                                  ></span
+                                >, Learn how we collect, use and share your data
+                                in our<span class="text-primary"
+                                  ><router-link to="/privacy">
+                                    Data Policy</router-link
+                                  ></span
+                                >
+                                and how we use cookies and similar technology in
+                                our
+                                <span class="text-primary"
+                                  ><router-link to="/privacy"
+                                    >Cookies policy</router-link
+                                  ></span
+                                >
+                                . You may receive SMS notification from us and
+                                can opt at any time.
+                              </p>
+                            </b-form-checkbox>
+                          </b-form-group>
+                        </ValidationProvider>
+                        <b-button
+                          @click="onRegister(newUserData)"
+                          type="submit"
+                          variant="outline-turquoise-solid"
+                          >CREATE ACCOUNT</b-button
+                        >
+                      </b-form>
                     </ValidationObserver>
                   </b-tab>
-                  
+                  <!-- REGISTRTION SECTION END -->
+
+                  <!-- LOGIN SECTION START -->
+
                   <b-tab title="Login">
-                    <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
-                    <b-form @submit.prevent="handleSubmit(onLogin)" class="att-form-body"> 
-                      <ValidationProvider name="email" :rules="{required: true, email}" v-slot="{ errors }">                   
-                      <b-form-group
-                        id="email-group"
-                        label-for="email"
-                        description=""
-                      ><span>{{ errors[0] }}</span>
-                        <b-form-input
-                          id="login-email"
-                          v-model.trim="userData.email"
-                          type="email"
-                          placeholder="Enter email"                
-                        ></b-form-input>
-                      </b-form-group> 
-                      </ValidationProvider>
-                      <ValidationProvider name="password" :rules="{required: true, min:6}" v-slot="{ errors }">
-                      <b-form-group id="password-group" label-for="password"><span>{{ errors[0] }}</span>
-                        <b-form-input
-                          id="login-password"
-                          v-model.trim="userData.password"                         
-                          type="password"
-                          placeholder="Enter pasword"         
-                        >
-                        </b-form-input>
-                      </b-form-group>
-                      </ValidationProvider>  
+                    <ValidationObserver ref="observer">
+                      <b-form
+                        slot-scope="{ validate }"
+                        @submit.prevent="validate().then(onLogin)"
+                        class="att-form-body"
+                      >
+                        <ValidationProvider name="email" rules="required|email">
+                          <b-form-group
+                            slot-scope="{ valid, errors }"
+                            id="email-group"
+                            label-for="email"
+                            description=""
+                          >
+                            <b-form-input
+                              id="login-email"
+                              v-model.trim="userData.email"
+                              :state="errors[0] ? false : valid ? true : null"
+                              type="email"
+                              placeholder="Enter email"
+                            >
+                            </b-form-input>
+                            <b-form-invalid-feedback id="inputLiveFeedback">
+                              {{ errors[0] }}
+                            </b-form-invalid-feedback>
+                          </b-form-group>
+                        </ValidationProvider>
+                        <ValidationProvider name="password" rules="required">
+                          <b-form-group
+                            slot-scope="{ valid, errors }"
+                            id="password-group"
+                            label-for="password"
+                          >
+                            <b-form-input
+                              id="login-password"
+                              v-model.trim="userData.password"
+                              :state="errors[0] ? false : valid ? true : null"
+                              type="password"
+                              placeholder="Enter pasword"
+                            >
+                            </b-form-input>
+                            <b-form-invalid-feedback id="inputLiveFeedback">
+                              {{ errors[0] }}
+                            </b-form-invalid-feedback>
+                          </b-form-group>
+                        </ValidationProvider>
                         <div
-                        class="alert alert-danger" role="alert"
-                        v-if="generalError"
+                          class="alert alert-danger"
+                          role="alert"
+                          v-if="generalError"
                         >
-                                Email and Password Do not match
+                          Email and Password Do not match
                         </div>
 
-                      <b-button
-                        @click="onLogin(userData)"
-                        type="submit"
-                        variant="outline-turquoise-solid"
-                        :loading="true"
-                        >LOGIN</b-button
-                      >
-                    </b-form>
+                        <b-button
+                          @click="onLogin(userData)"
+                          type="submit"
+                          variant="outline-turquoise-solid"
+                          :disabled="disabled"
+                          >LOGIN
+                          <!-- <b-spinner aria-disabled="true" variant="info" label="Text Centered"></b-spinner> -->
+                          <b-spinner
+                            v-if="loading"
+                            type="grow"
+                            label="Text Centered"
+                          ></b-spinner>
+                        </b-button>
+                      </b-form>
                     </ValidationObserver>
+                    <!-- LOGIN SECTION END -->
                     <div>
                       <p>
                         <span class="text-muted"
@@ -245,31 +322,64 @@
 </template>
 
 <script>
+import { Validator } from "vee-validate/dist/vee-validate";
+// extend("alpha", {
+//  message: (field, values) => "You must enter a " + `${field}` + " value"
+// });
+// var errorMessage =
+//  " this username is not available"
+var errorMessage = "hello"
+
+Validator.extend("customUsername", {
+ message: field => "The " + `${field}` + errorMessage,
+ validate: value => {
+ var theseCharacters = /^[a-zA-Z0-9\d_]*$/  
+ var containsRequiredChars = theseCharacters.test(value);
+ if (containsRequiredChars) {
+ return true;
+ } else {
+   if (!containsRequiredChars) {
+    errorMessage = ' contains forbidden characters: " ' + " ' ? & / < > or space";
+  } else {
+  errorMessage = " The username field may contain alpha-numeric characters and underscores";
+ }
+ return false;
+ } 
+  
+}
+ 
+});
+
+Validator.extend("uniqueUsername", {
+ message: field => "The " + `${field}` + errorMessage,
+ validate: value => {
+ return value
+}
+ 
+});
+
 import {
   date_options,
   month_options,
   year_options,
 } from "@/utils/DateSelector.js";
-import {
-  GET_USERNAMES,
-  GET_USERNAME,
-  SIGNUP_USER,
-  SIGNIN_USER,
-  GET_LOADING 
-} from "@/store/MutationTypes";
+
 import { mapActions, mapGetters } from "vuex";
 let isUsed = false;
 let usernames = [];
 export default {
   name: "SignUp-Page",
+  components: {
+
+  },
   computed: {
     generalError() {
       return this.$store.getters.generalError;
     },
-    ...mapActions([GET_USERNAMES, SIGNUP_USER, SIGNIN_USER]),
-    ...mapGetters([GET_USERNAME, GET_LOADING]),
+    ...mapActions(["signUpUser", "loginUser"]),
+    ...mapGetters(["getUsername", "getLoading"]),
     filteredUsernames: function () {
-      usernames = this.GET_USERNAME.map((val) => val.username);
+      usernames = this.getUsername.map((val) => val.username);
       if (
         usernames.some(
           (username) =>
@@ -277,10 +387,19 @@ export default {
         )
       ) {
         isUsed = true;
-      } else isUsed = false;
+      } else {
+
+        isUsed = false;
+      }
 
       return isUsed;
     },
+    checkUsername() {
+      if (isUsed === true) {
+        return this.hasError
+      }
+      return this.hasError
+    }
   },
   data() {
     return {
@@ -292,39 +411,108 @@ export default {
         confirmPassword: "",
         dobCheck: false,
         terms: true,
+        date_selected: null,
+        month_selected: null,
+        year_selected: null,
       },
-      date_selected: null,
-      month_selected: null,
-      year_selected: null,
       date_options: date_options,
       month_options: month_options,
       year_options: year_options,
 
       userData: {
         email: "",
-        password: "",        
+        password: "",
       },
+      loading: false,
+      disabled: false,
+      modalShow: false,
+      showDobChcekBox: false,
+      tooYoung: false,
+      hasError: 'text-danger',
+      noError: '#1fc5b9'
     };
   },
   methods: {
-    onRegister() {
-      this.$store.dispatch(SIGNUP_USER, this.newUserData);
-      alert(
-        "Thanks for registering an account, please check your email for the verification link."
-      );
+    dobCheck() {
+      const birthYear = parseInt(this.newUserData.year_selected)
+      const currentYear = 2021
+      const underAge = currentYear - birthYear
+      if (underAge < 16) {
+        this.showDobChcekBox = true;
+        console.log('you must check this');
+      } else (console.log('you are fine', underAge))
+      
+
     },
-    onLogin() {
-        try {
-          this.$store.dispatch(SIGNIN_USER, this.userData);
-        alert(
-          "Thanks for registering an account, please check your email for the verification link."
-        );
-        } catch (e) {
-          
-          console.log(e)
-        }
-    }
-    
+    resetForm() {
+      this.newUserData.email = "";
+      this.newUserData.username = "";
+      this.newUserData.password = "";
+      this.newUserData.confirmPassword = "";
+      this.newUserData.date_selected = null;
+      this.newUserData.month_selected = null;
+      this.newUserData.year_selected = null;
+    },
+    onRegister() {
+      this.loading = true;
+      this.disabled = true;
+      this.newUserData.dateOfBirth =
+        this.newUserData.date_selected +
+        "/" +
+        this.newUserData.month_selected +
+        "/" +
+        this.newUserData.year_selected;
+      // this.$store.dispatch('signUpUser', this.newUserData);
+      // console.log(this.newUserData.date_selected +'/'+ this.newUserData.month_selected +'/'+ this.newUserData.year_selected)
+      this.modalShow = true;
+      console.log(this.newUserData.username);
+      this.loading = false;
+      this.disabled = false;
+      this.resetForm()
+    },
+    async onLogin() {
+      const isValid = await this.$refs.observer.validate();
+
+      if (!isValid) {
+        console.log("it's not valid")
+          alert("Please fix errors first!");
+      } else {
+        this.loading = true;
+        this.disabled = true;
+        // console.log("it's valid");
+        this.$store.dispatch('loginUser', this.userData);
+        // console.log(this.userData.email + " signed in with password " + this.userData.password);
+        this.userData.email = "";
+        this.userData.password = "";
+        this.$bvToast.toast("You are logged in", {
+          title: "welcome",
+          autoHideDelay: 5000,
+          variant: "info",
+          solid: true,
+          name: "b-toaster-top-center",
+        });
+        this.loading = false;
+        this.disabled = false;
+        this.$router.push('/creator-profile')
+      }
+      // try {
+      //   // this.loading = true;
+      //   // this.disabled = true;
+      //   console.log(this.userData);
+      //   // this.$store.dispatch(loginUser, this.userData);
+      //   this.$bvToast.toast("You are logged in", {
+      //     title: "welcome",
+      //     autoHideDelay: 5000,
+      //     variant: "info",
+      //     solid: true,
+      //     name: "b-toaster-top-center",
+      //   });
+      //   this.loading = false;
+      //   this.disabled = false;
+      // } catch (e) {
+      //   console.log(e);
+      // }
+    },
   },
 };
 </script>

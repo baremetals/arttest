@@ -33,13 +33,9 @@
                     ></b-form-input>
                 </b-form-group>
                 <b-form-group label="Short Description">
-                    <b-form-textarea
-                    id="textarea"
-                    v-model="form.text"
-                    placeholder="Enter something..."
-                    rows="3"
-                    max-rows="6"
-                    ></b-form-textarea>
+                    <form>
+                      <!-- <html-editor></html-editor> -->
+                    </form>
                 </b-form-group>
             </b-form>
         </b-col>
@@ -55,17 +51,15 @@
       </b-form-group>
       <!-- <TextEditor /> -->
       <br>
-      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="submit" variant="primary"></b-button>
     </b-card>
   </div>
 </template>
 
 <script>
-// import TextEditor from "@/components/TextEditor.vue";
+
 export default {
-  components :{
-    // TextEditor
-  },
+  name : 'write-story',
   data(){
     return{
       form : {email : "", name : "", text : ""},

@@ -1,7 +1,10 @@
 <template>
   <div>
-     <Header v-if="!LOGIN_USER" /> 
-    <Menu v-if="LOGIN_USER"/>
+     <Header  v-if="!loggedInUser"/> 
+    <Menu 
+    :userData="userData"
+    v-if="loggedInUser"
+    />
       <router-view></router-view>   
     <Footer />
   </div>
@@ -11,7 +14,6 @@
 import Header from '@/layouts/Header.vue'
 import Menu from '@/layouts/Menu.vue'
 import Footer from '@/layouts/Footer.vue'
-import { GET_ALL_BLOG_POST, LOGIN_USER } from '@/store/MutationTypes'
 import { mapGetters } from "vuex";
 export default {
   name: 'App',
@@ -21,11 +23,16 @@ export default {
     Footer,
   },
   computed: {
-    ...mapGetters([LOGIN_USER]),
+    ...mapGetters(['loggedInUser', 'userData']),
   },
   mounted() {
-    this.$store.dispatch(GET_ALL_BLOG_POST);
+    // if (this.$store.getters.authenticated) {
+      
+    //   // this.$store.dispatch('getUserData');
+    // }
+    // this.$store.dispatch('getAllBlogPosts');
     this.$store.dispatch('getAllContests');
+    this.$store.dispatch('getUsernames'); 
   },
 }
 </script>

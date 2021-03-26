@@ -8,19 +8,30 @@ import Blogs from '@/views/Blogs.vue'
 
 // Auth Routes
 import SignUp from '@/auth/SignUp.vue'
+// import SignOut from '@/auth/SignOut.vue'
 import ForgotPassword from '@/auth/ForgotPassword.vue'
 import ResetPassword from '@/auth/ResetPassword.vue'
 
 //Menu Routes
 import CreatorProfile from '@/views/CreatorProfile.vue'
+import CompanyProfile from '@/views/CompanyProfile.vue'
 import Voting from '@/views/Voting.vue'
+import ContestEntry from '@/views/ContestEntry.vue'
+import ResCompanyProfile from '@/views/ResCompanyProfile.vue'
+import CompanyProfile2 from '@/views/CompanyProfile2.vue'
+import ResCreatorProfile from '@/views/ResCreatorProfile.vue'
+import Inbox from '@/components/Inbox.vue'
+import Activity from '@/components/Activity.vue'
+import Setting from '@/components/Setting.vue'
+import NotFound from '@/views/NotFoundPage.vue'
+import StaticUserProfile from '@/views/StaticUserProfile.vue'
+import StaticBrandProfile from '@/views/StaticBrandProfile.vue'
 
 //Footer
 import About from '@/views/About.vue'
 import ContactUs from '@/views/ContactUs.vue'
 import Privacy from '@/views/Privacy.vue'
 import Terms from '@/views/Terms.vue'
-
 
 const routes = [
   //Main Header Routes
@@ -39,6 +50,11 @@ const routes = [
     name: 'ContestDetails-Page',
     component: ContestDetails,
     props: true,
+  },
+  {
+    path: '/contest-entry',
+    name: 'ContestEntryForm',
+    component: ContestEntry
   },
   {
     path: '/events',
@@ -62,6 +78,11 @@ const routes = [
     name: 'Signup-Page',
     component: SignUp
   },
+  // {
+  //   path: '/auth-signout',
+  //   name: 'SignOut-Page',
+  //   component: SignOut
+  // },
   {
     path: '/auth-resetpassword/:token',
     name: 'Reset-Password-Page',
@@ -81,11 +102,66 @@ const routes = [
   },
   {
     path: '/creator-profile',
-    name: 'UserProfile-Page',
+    name: 'CreatorProfile-Page',
     component: CreatorProfile,
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: '/user-profile',
+    name: 'UserProfile-Page',
+    component: StaticUserProfile,
+    meta: {
+      
+    }
+  },
+  {
+    path: '/company-profile',
+    name: 'Static-Brand-Profile',
+    component: StaticBrandProfile,
+    meta: {
+      
+    }
+  },
+  {
+    path: '/company',
+    name: 'CompanyProfile-Page',
+    component: CompanyProfile,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/res-company',
+    name: 'Rcompany',
+    component: ResCompanyProfile
+  },
+  {
+    path: '/res-creator',
+    name: 'Rcreator',
+    component: ResCreatorProfile
+  },
+  {
+    path: '/company2',
+    name: 'CompanyProfile2',
+    component: CompanyProfile2
+  },
+  {
+    path: '/inbox',
+    name: 'Inbox',
+    component: Inbox
+  },
+  {
+    path: '/activity',
+    name: 'Activity',
+    component: Activity
+  },
+  
+  {
+    path: '/support',
+    name: 'Support',
+    component: Setting
   },
 
   //Footer Routes
@@ -109,7 +185,11 @@ const routes = [
     name: 'Terms-Page',
     component: Terms
   },
+  { path: '*', component: NotFound }
 ]
+
+
+
 
 
 export default routes

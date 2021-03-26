@@ -1,13 +1,12 @@
 import { 
     SET_ERRORS,   
     CLEAR_ERRORS, 
-    GET_ERRORS,
     LOADING_UI, 
     STOP_LOADING_UI,
-    GET_LOADING,
     // SET_EMAIL_ERROR,
     // SET_PASSWORD_ERROR,
-    SET_GENERAL_ERROR
+    SET_GENERAL_ERROR,
+    LOADING_DATA
 } from '@/store/MutationTypes';
 
 export const uiModule = {
@@ -36,6 +35,9 @@ export const uiModule = {
         [STOP_LOADING_UI] (state) {
             state.loading = false;
         },
+        [LOADING_DATA] (state) {
+            state.loading = true;
+        },
         // [SET_EMAIL_ERROR] (state, emailError) {
         //     state.emailError = emailError
         // },
@@ -49,8 +51,8 @@ export const uiModule = {
     },
 
      getters: {
-        [GET_ERRORS]: state => state.errors,
-        [GET_LOADING]: state => state.loading,
+        getErrors: state => state.errors,
+        getLoading: state => state.loading,
         // emailErrors: state => state.emailError,
         // passwordErrors: state => state.passwordErrors,
         generalError: state => state.generalError

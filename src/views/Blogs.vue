@@ -31,18 +31,17 @@
 </template>
 
 <script>
-// import { GET_ALL_BLOG_POST } from '@/store/MutationTypes'
 import { mapGetters } from 'vuex';
 import Blogs from '@/components/PostCard.vue'
 export default {
   name: 'Blogs-Page',
   computed: {
     ...mapGetters([
-      'GET_BLOGS'
+      'getBlogs'
     ])
   },
   // mounted() {
-  //   this.$store.dispatch(GET_ALL_BLOG_POST);
+  //   this.$store.dispatch(getAllBlogPosts);
   // },
   components: {
     Blogs

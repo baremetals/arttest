@@ -1,12 +1,39 @@
 <template>
   <div>
-    <b-card class="shadow-lg">
+    <b-card class="shadow-lg" id="to-upload-image" v-if="!FileData.length">
+            <div class="uploadDiv">
+            <!-- <br> -->
+            <b-img class="mt-4" src="@/assets/images/image-gallery.png" style="display:block;margin-right:auto;margin-left:auto;width:43.94px;height:40.28px"></b-img>
+            <!-- <br> -->
+            <h4 class="upload-guide-text mt-4">Drag and drop File here</h4>
+            
+            <!-- <br> -->
+            <div class="upload-btn mt-4">
+                <input type="file" name="" id="file" @change="previewFile" accept="*">
+                <label for="file">Upload from Computer</label>
+            </div>
+            <!-- <br> -->
+            <p class="upload-note-text mt-4">Maximum 5 images at a time, By uploading you agreed out our <a href="" style="color:#1fc5b9">terms of service</a></p>
+            <!-- <br> -->
+            </div>
+        </b-card>
+    <!-- <b-card class="shadow-lg" v-if="!FileData.length">
         <div class="uploadsA">
-            <input type="file" name="" id="" @change="FileDataC" accept="file/*">
+            <input type="file" name="" id="" @change="previewFile" accept="*">
         </div>
+    </b-card> -->
+    <b-card class="shadow-lg" v-if="FileData.length">
+      <input type="file" name="" id="" @change="previewFile" accept="*">
+      <b-row>
+        <b-col cols="3" v-for="(file, index) in FileData" :key="index" class="mt-4">
+          <div class="divplay_fileDiv">
+            <p class="fsizeText">{{file.fsize}}</p>
+            <p class="fnameText">{{file.fname}}</p>
+          </div>
+        </b-col>
+      </b-row>
     </b-card>
-    <br>
-    <div class="video_info" v-if="FileData.length">
+    <div class="video_info mt-4" v-if="FileData.length">
         <b-card class="shadow-lg">
             <h3>File Information</h3>
             <hr />
@@ -53,21 +80,29 @@
                 max-rows="6"
                 ></b-form-textarea>
             </b-form-group>
-            <br>
-            <b-button type="submit" variant="primary">Submit</b-button>
+            <b-form-group label="Select Categories">
+              <!-- <multi-select
+              v-model="values"
+              :options="options">
+              </multi-select> -->
+            </b-form-group>
+            <b-button class="mt-4" type="submit" variant="primary">Submit</b-button>
         </b-card>
     </div>
   </div>
 </template>
 
 <script>
+// import vueMultiSelect from 'vue-multi-select';
+// import 'vue-multi-select/dist/lib/vue-multi-select.css';
 export default {
-  components : {
-  
-  },
+  name : 'upload-file',
   data() {
       return {
-        FileData : "",
+        values: [],
+        selected: null,
+        options: ['list', 'of', 'options'],
+        FileData : [],
         form: {
           email: '',
           name: '',
@@ -80,14 +115,52 @@ export default {
       }
     },
     methods: {
-      FileDataC(){
-          this.FileData = "0000";
-          console.log(this.FileData.length)
+      previewFile(e){
+        var input = e.target;
+        if(input.files && input.files[0]){
+            const fsize = input.files[0].size;
+            const fname = input.files[0].name;
+            var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            if (fsize == 0) return '0 Byte';
+            var i = parseInt(Math.floor(Math.log(fsize) / Math.log(1024)));
+            var rfsize = Math.round(fsize / Math.pow(1024, i), 2) + ' ' + sizes[i];
+            console.log(rfsize);
+            var reader = new FileReader();
+            reader.onload = () => {
+                this.FileData.push({ fsize : rfsize, fname : fname});
+                console.log(this.FileData)
+            }
+            reader.readAsDataURL(input.files[0])
+        }
+      },
+      customLabel (option) {
+        return `${option.library} - ${option.language}`
       }
     }
 }
 </script>
-
-<style>
-
+<style scoped>
+  .divplay_fileDiv{
+    height: 200px;
+    width: 200px;
+    background-color: #dfdfdf;
+    border-radius: 10px;
+  }
+  .fsizeText{
+        text-align: center;
+        position: absolute;
+        top: 30%;
+        left: 30%;
+        font-size: 25px;
+        font-family: serif;
+        font-weight: 800;
+    }
+    .fnameText{
+        text-align: center;
+        position: absolute;
+        top: 45%;
+        left: 16%;
+        font-family: serif;
+    }
 </style>
+
