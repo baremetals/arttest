@@ -76,11 +76,9 @@ import { mapGetters } from "vuex";
 export default {
   name: 'Profile',
   computed: {
-    ...mapGetters([
-      'userData'
-    ]),
+    ...mapGetters(['getUserDetails']),
     user() {
-       return this.userData;
+      return this.getUserDetails.credentials;
     } 
   },
 };

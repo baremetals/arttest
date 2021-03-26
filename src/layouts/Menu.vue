@@ -402,22 +402,17 @@ import UploadImage from "@/components/UploadImage.vue";
 import WriteStory from "@/components/WriteStory.vue";
 import UploadVideo from "@/components/UploadVideo.vue";
 import UploadFile from "@/components/UploadFile.vue";
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 // let isUser;
 export default {
   name: "main-header",
-  props: ['userData'],
+  // props: ['userData'],
   computed: {
-    // ...mapGetters([
-    //   'userData'
-    // ]),
-    // user() {
-    //    return this.$store.getters.userData;
-    // },
-     
+    ...mapGetters(['getUserDetails']),
+    userData () {
+      return this.getUserDetails.credentials;
+    }
   },
-  
-  
   components: {
     UploadImage,
     WriteStory,
