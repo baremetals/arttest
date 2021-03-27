@@ -20,6 +20,9 @@ import VueJwtDecode from 'vue-jwt-decode'
 // import { SET_AUTHENTICATED } from './store/MutationTypes'
 import axios from 'axios';
 import config from '@/config/config';
+import { firestorePlugin } from 'vuefire'
+
+Vue.use(firestorePlugin)
 
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
