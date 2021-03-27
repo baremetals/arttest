@@ -439,8 +439,8 @@ export default {
       console.log(e);
     },
     logout() {
+      this.$store.dispatch('logOutUser')
       this.$router.push('/auth-signup') 
-      return this.$store.dispatch('logOutUser')
     },
     
   },
