@@ -33,8 +33,11 @@ export default {
   name: 'OpenCalls',
   computed: {
     ...mapGetters([
-      'contestsSliced'
-    ])
+      'contests'
+    ]),
+    contestsSliced () {
+      return this.contests.slice(0,4)
+    }
   },
 };
 </script>

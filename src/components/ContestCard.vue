@@ -60,18 +60,16 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { contests } from '@/utils/data'
+
 export default {
-    data () {
-        return {
-            contests
+    computed: {
+        ...mapGetters([
+            'contests'
+        ]),
+        contestsSliced () {
+            return this.contests.slice(0,4)
         }
     },
-    computed: {
-    ...mapGetters([
-      'contestsSliced'
-    ])
-  },
 }
 </script>
 

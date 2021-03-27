@@ -76,18 +76,13 @@ export const contestModule = {
 
     actions: {
         getAllContests({ commit }) {
-          dbContests.onSnapshot(querySnapshot => {
+          dbContests.orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
             var contestData = [];
             querySnapshot.forEach(doc => {
               contestData.push(doc.data());
             });
             commit('SET_CONTESTS', contestData)
           })
-            // axios.get(`${config.prodUrlEndpoint}/contests`)
-            // .then((res) => {
-            //     commit('SET_CONTESTS', res.data)
-            // })
-            // .catch((err) => console.log(err));
         },
         createContest({ commit }, contestData) {
             axios
@@ -156,7 +151,6 @@ export const contestModule = {
     getters: {
         contests: state => state.contests,
         contest: state => state.contest,
-        contestsSliced: state => state.contests.slice(0,4),
         contestFromId: (state) =>  (contestId) => {
             return state.contests.find(contest => contest.contestId === contestId)
         }
