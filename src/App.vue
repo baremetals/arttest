@@ -2,7 +2,6 @@
     <div id="app">
      <Header  v-if="!loggedInUser"/> 
     <Menu 
-    :userData="userData"
     v-if="loggedInUser"
     />
       <router-view></router-view>   
@@ -23,14 +22,15 @@ export default {
     Footer,
   },
   computed: {
-    ...mapGetters(['loggedInUser', 'userData']),
+    ...mapGetters(['loggedInUser']),
   },
   mounted() {
     // if (this.$store.getters.authenticated) {
       
-    //   // this.$store.dispatch('getUserData');
+    //   this.$store.dispatch('getTimelineData');
     // }
-    // this.$store.dispatch('getAllBlogPosts');
+    this.$store.dispatch('getAllEvents');
+    this.$store.dispatch('getAllBlogPosts');
     this.$store.dispatch('getAllContests');
     this.$store.dispatch('getUsernames'); 
   },

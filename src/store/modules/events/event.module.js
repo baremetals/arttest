@@ -67,8 +67,8 @@ export const eventModule = {
     },
 
     actions: {
-        getAllEvents({ commit }) {
-            axios.get(`${config.prodUrlEndpoint}/events`)
+      async  getAllEvents({ commit }) {
+          await axios.get(`${config.prodUrlEndpoint}/events`)
             .then((res) => {
                 commit('SET_EVENTS', res.data)
             })

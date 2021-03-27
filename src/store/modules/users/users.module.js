@@ -5,12 +5,15 @@ import {
     LOADING_USER,
     SET_USER,
     FOLLOW_USER,
-    UNFOLLOW_USER
+    UNFOLLOW_USER,
+    LOADING_DATA,
+    SET_ENTRIES,
+    SET_USERS_TIMELINE
 } from '@/store/MutationTypes';
 
 import axios from 'axios';
 import config from '@/config/config';
-import { SET_ENTRIES } from '../../MutationTypes';
+
 
 export const usersModule = {
 
@@ -18,7 +21,8 @@ export const usersModule = {
         loading: false,
         users: [],
         usernames: [],
-        userDetails: {}
+        userDetails: {},
+        timeline: []
 
     },
 
@@ -59,6 +63,9 @@ export const usersModule = {
               return {
                 state
               };  
+        },
+        [SET_USERS_TIMELINE] (state, payload) {
+            state.timeline = payload;
         }
 
     },
@@ -118,7 +125,13 @@ export const usersModule = {
               .catch(() => {
                 commit(SET_ENTRIES, null);
               });
-          }
+        },
+        // getTimelineData({ commit }) {
+        //     let timeline = [];
+        //     const posts = this.$store.state.events
+        //     timeline.push(posts)
+        //     commit(SET_USERS_TIMELINE, timeline)
+        // }
     },
 
      getters: {

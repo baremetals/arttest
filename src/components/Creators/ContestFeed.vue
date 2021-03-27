@@ -1,7 +1,8 @@
 <template>
-  <card class="shadow-lg mt-4">
+  <div>
+    <card style="width: 100%" class="shadow-lg mt-4">
     <b-container style="padding-left: 0px">
-      <b-row style="padding-left: 0px" align-v="center" v-for="contest in contests" :key="contest.contestId">
+      <b-row style="padding-left: 0px" align-v="center" >
         <b-col xl="1" lg="1" md="1" sm="1">
           <a href="javascript:;" class="avatar avatar-xl rounded-circle">
             <img
@@ -47,7 +48,7 @@
           {{contest.title}}
         </p>
         <p>
-          {{contest.description(0,30)}}
+          {{contest.description.slice(0,200)}}....
         </p>
       </b-row>
     </b-container>
@@ -103,16 +104,16 @@
       </b-row>
     </b-container>
   </card>
+  </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
+  // import { mapGetters } from 'vuex';
 export default {
   name: 'ContestCard',
+  props: ['contest'],
   computed: {
-    ...mapGetters([
-      'contests'
-    ])
+  
   }
 };
 </script>

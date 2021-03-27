@@ -276,7 +276,6 @@ export const authModule = {
         loggedInUser: (state) => {
             return state.token !== null
         },
-        credentials: state => state.credentials,
         followers: state => state.followers,
         following: state => state.following,
         entryLikes: state => state.entryLikes,
@@ -285,30 +284,8 @@ export const authModule = {
         eventLikes: state => state.eventLikes,
         entryVotes: state => state.entryVotes,
         authenticated: state => state.authenticated,
-        // userInfo: state =>  {
-        //     return ({
-        //         email: state.credentials.credentials,
-        //         imageUrl: state.credentials.credentials
-        //     })
-        // },
-        // userD: state => state.credentials.credentials,
-        userData: state =>  ({
-            email: state.credentials.email,
-            imageUrl: state.credentials.imageUrl,
-            fullname: state.credentials.fullname,
-            username: state.credentials.username,
-            followersCount: state.credentials.followersCount,
-            followingCount: state.credentials.followingCount,
-            totalContestsEntered: state.credentials.totalContestsEntered,
-            location: state.credentials.location,
-            bio: state.credentials.bio,
-            createdAt: state.credentials.createdAt,
-            dateOfbirth: state.credentials.dateOfbirth,
-            role: state.credentials.role,
-            website: state.credentials.website,
-            specialSkill: state.credentials.specialSkill,
-            backgroundImage: state.credentials.backgroundImage,
-        }),
+        userData: state => state.credentials
+        
 
            
         

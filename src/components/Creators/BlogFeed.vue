@@ -112,7 +112,8 @@
 
 <script>
 export default {
-  name: 'BlogCard'
+  name: 'BlogCard',
+  props: ['post']
 };
 </script>
 
