@@ -24,7 +24,7 @@ import LoadingPanel from './LoadingPanel.vue';
 
 import BasePagination from './BasePagination.vue';
 
-import SidebarPlugin from './SidebarPlugin';
+import SidebarPlugin from '../SidebarPlugin';
 
 export {
   BaseCheckbox,
