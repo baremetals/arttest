@@ -77,13 +77,7 @@
                             </b-form-invalid-feedback>
                           </b-form-group>
                         </ValidationProvider>
-                        <div
-                          v-bind:class="
-                            filteredUsernames ? 'arttest' : 'arttest-trill'
-                          "
-                        >
-                          {{ newUserData.username }}
-                        </div>
+                        
                         <br />
 
                         <b-form-group
@@ -323,39 +317,50 @@
 
 <script>
 import { Validator } from "vee-validate/dist/vee-validate";
-// extend("alpha", {
-//  message: (field, values) => "You must enter a " + `${field}` + " value"
-// });
-// var errorMessage =
-//  " this username is not available"
+import { db } from '@/db'
+
 var errorMessage = "hello"
 
 Validator.extend("customUsername", {
- message: field => "The " + `${field}` + errorMessage,
- validate: value => {
- var theseCharacters = /^[a-zA-Z0-9\d_]*$/  
- var containsRequiredChars = theseCharacters.test(value);
- if (containsRequiredChars) {
- return true;
- } else {
-   if (!containsRequiredChars) {
-    errorMessage = ' contains forbidden characters: " ' + " ' ? & / < > or space";
-  } else {
-  errorMessage = " The username field may contain alpha-numeric characters and underscores";
- }
- return false;
- } 
-  
-}
- 
+  message: field => "The " + `${field}` + errorMessage,
+  validate: value => {
+    var theseCharacters = /^[a-zA-Z0-9\d_]*$/  
+    var containsRequiredChars = theseCharacters.test(value);
+    if (containsRequiredChars) {
+      return true;
+    } else {
+      if (!containsRequiredChars) {
+        errorMessage = ' contains forbidden characters: " ' + " ' ? & / < > or space";
+      } else {
+        errorMessage = " The username field may contain alpha-numeric characters and underscores";
+      }
+      return false;
+    }  
+  } 
 });
-
-Validator.extend("uniqueUsername", {
- message: field => "The " + `${field}` + errorMessage,
- validate: value => {
- return value
-}
- 
+const isUnique = async (value) => {
+  const query = await db.collection('users').where('username', '==', value).get();
+  let isValid
+  let msg
+  if (!query.empty) {
+    isValid = false
+    msg = " already exist"
+  } else {
+    isValid = true
+    msg = " is available"
+  }
+  return {
+    valid: isValid,
+      data: {
+      message: value + msg
+    }
+  };
+};
+Validator.extend('uniqueUsername', {
+  validate: isUnique,
+  getMessage: (field, params, data) => {
+    return data.message;
+  }
 });
 
 import {
@@ -366,7 +371,6 @@ import {
 
 import { mapActions, mapGetters } from "vuex";
 let isUsed = false;
-let usernames = [];
 export default {
   name: "SignUp-Page",
   components: {
@@ -377,23 +381,7 @@ export default {
       return this.$store.getters.generalError;
     },
     ...mapActions(["signUpUser", "loginUser"]),
-    ...mapGetters(["getUsername", "getLoading"]),
-    filteredUsernames: function () {
-      usernames = this.getUsername.map((val) => val.username);
-      if (
-        usernames.some(
-          (username) =>
-            username.toLowerCase() === this.newUserData.username.toLowerCase()
-        )
-      ) {
-        isUsed = true;
-      } else {
-
-        isUsed = false;
-      }
-
-      return isUsed;
-    },
+    ...mapGetters(["getLoading"]),
     checkUsername() {
       if (isUsed === true) {
         return this.hasError

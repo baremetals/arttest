@@ -70,17 +70,7 @@ export const usersModule = {
 
     },
 
-    actions: {
-
-        async getUsernames({ commit }) {
-            await axios
-                .get(`${config.prodUrlEndpoint}/usernames`)
-                .then((res) => {
-                    commit(SET_USERNAMES, res.data)
-                })
-                .catch((err) => console.log(err));
-        },
-        
+    actions: {       
         async getAllUsers({ commit }) {
             commit(LOADING_ALL_USERS)
             await axios
@@ -133,9 +123,7 @@ export const usersModule = {
         //     commit(SET_USERS_TIMELINE, timeline)
         // }
     },
-
      getters: {
-        getUsername: state => state.usernames,
         getUsers: state => state.users,
         getUserDetails: state => state.userDetails,
     }

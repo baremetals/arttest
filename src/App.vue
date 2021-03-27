@@ -31,8 +31,7 @@ export default {
     // }
     this.$store.dispatch('getAllEvents');
     this.$store.dispatch('getAllBlogPosts');
-    this.$store.dispatch('getAllContests');
-    this.$store.dispatch('getUsernames'); 
+    this.$store.dispatch('getAllContests'); 
   },
 }
 </script>
