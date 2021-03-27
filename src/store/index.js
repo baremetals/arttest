@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 import { blogsModule } from './modules/blogs/blogs.module'
 import { eventModule } from './modules/events/event.module'
 import { contestModule } from './modules/contests/contest.module'
@@ -18,5 +19,6 @@ export default new Vuex.Store({
     eventModule,
     usersModule,
     entryModule
-  }
+  },
+  plugins: [ createPersistedState() ]
 })
