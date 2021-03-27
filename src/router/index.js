@@ -21,7 +21,7 @@ import ResCompanyProfile from '@/views/ResCompanyProfile.vue'
 import CompanyProfile2 from '@/views/CompanyProfile2.vue'
 import ResCreatorProfile from '@/views/ResCreatorProfile.vue'
 import Inbox from '@/components/Inbox.vue'
-import Activity from '@/components/Activity.vue'
+
 import Setting from '@/components/Setting.vue'
 import NotFound from '@/views/NotFoundPage.vue'
 import StaticUserProfile from '@/views/StaticUserProfile.vue'
@@ -152,11 +152,7 @@ const routes = [
     name: 'Inbox',
     component: Inbox
   },
-  {
-    path: '/activity',
-    name: 'Activity',
-    component: Activity
-  },
+  
   
   {
     path: '/support',

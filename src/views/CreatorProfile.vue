@@ -946,7 +946,6 @@ import BlogFeed from "@/components/Creators/BlogFeed.vue";
 import EventFeed from "@/components/Creators/EventFeed.vue";
 import ContestFeed from "@/components/Creators/ContestFeed.vue";
 import AdvertFeed from "@/components/Creators/AdvertFeed.vue";
-
 export default {
   name: "Creator-Profile",
   components: {
@@ -1023,7 +1022,13 @@ export default {
     ...mapGetters(["userData", "contests", "events", "blogposts"]),
     user() {
       return this.userData.credentials;
-    }
+
+    },
+    // created() {
+    //   return timeline.push(this.contests);
+    // }, not needed
+
+    
   },
 };
 </script>
