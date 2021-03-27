@@ -947,7 +947,7 @@ import EventFeed from "@/components/Creators/EventFeed.vue";
 import ContestFeed from "@/components/Creators/ContestFeed.vue";
 import AdvertFeed from "@/components/Creators/AdvertFeed.vue";
 
-let timeline = [];
+// let timeline = []; not needed
 export default {
   name: "Creator-Profile",
   components: {
@@ -1025,9 +1025,9 @@ export default {
     user() {
       return this.userData.credentials;
     },
-    created() {
-      return timeline.push(this.contests);
-    },
+    // created() {
+    //   return timeline.push(this.contests);
+    // }, not needed
   },
 };
 </script>
