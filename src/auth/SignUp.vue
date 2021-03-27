@@ -370,7 +370,6 @@ import {
 } from "@/utils/DateSelector.js";
 
 import { mapActions, mapGetters } from "vuex";
-let isUsed = false;
 export default {
   name: "SignUp-Page",
   components: {
@@ -382,12 +381,6 @@ export default {
     },
     ...mapActions(["signUpUser", "loginUser"]),
     ...mapGetters(["getLoading"]),
-    checkUsername() {
-      if (isUsed === true) {
-        return this.hasError
-      }
-      return this.hasError
-    }
   },
   data() {
     return {
@@ -416,8 +409,6 @@ export default {
       modalShow: false,
       showDobChcekBox: false,
       tooYoung: false,
-      hasError: 'text-danger',
-      noError: '#1fc5b9'
     };
   },
   methods: {
