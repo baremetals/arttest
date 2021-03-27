@@ -179,6 +179,7 @@ export const authModule = {
             localStorage.removeItem('FBIdToken')
             delete axios.defaults.headers.common['Authorization']
             commit(SET_UNAUTHENTICATED)
+            commit(SET_USER, {})
         },
         async getUserData({ commit }) {
             commit(LOADING_USER)
