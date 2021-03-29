@@ -21,7 +21,7 @@
           <b-row>
             <b-col col lg="9">
               <b-card-title class="att-font-weight-900 att-black-color">
-                {{ contest.title }}
+                {{ event.title }}
               </b-card-title>
               <div class="att-black-color att-pb-10">@johnnydoe</div>
             </b-col>
@@ -76,7 +76,7 @@
 
 export default {
   name: "Events-Component",
-  props: ['contest'],
+  props: ['event'],
   
 };
 </script>
