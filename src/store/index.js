@@ -10,7 +10,7 @@ import { usersModule } from './modules/users/users.module'
 import { uiModule }  from './modules/ui.module'
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+export const store = new Vuex.Store({
   modules: {
     uiModule,
     authModule,
