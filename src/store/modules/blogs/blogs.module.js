@@ -11,6 +11,8 @@ import {
 
 import axios from 'axios';
 import config from '@/config/config';
+import { db } from '@/db'
+const dbPosts = db.collection('blogposts')
 
 export const blogsModule = {
 	state: {
@@ -66,14 +68,15 @@ export const blogsModule = {
 	},
 
 	actions: { 
-		getAllBlogPosts: ({ commit }) => {
-			axios
-				.get(`${config.prodUrlEndpoint}/blogposts`)
-				.then((res) => {
-					commit(SET_BLOGS, res.data);
-				})
-				.catch((err) => console.log(err));
-		},
+    getAllBlogPosts({ commit }) {
+      dbPosts.orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
+        var blogsData = [];
+        querySnapshot.forEach(doc => {
+          blogsData.push(doc.data());
+        });
+        commit('SET_BLOGS', blogsData)
+      })
+    },
 		getBlogData({ commit }, blogpostId) {
             commit(LOADING_BLOGS);
             axios

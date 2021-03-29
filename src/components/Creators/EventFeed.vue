@@ -6,13 +6,13 @@
           <a href="javascript:;" class="avatar avatar-xl rounded-circle">
             <img
               alt="Image placeholder"
-              src="@/assets/images/image/Ellipse -82.png"
+              :src="event.hostImg || 'https://firebasestorage.googleapis.com/v0/b/arttest-60d83.appspot.com/o/logo.svg?alt=media&token=4aa3ca2a-470c-4f1c-8fd2-296861a66243'"
             />
           </a>
         </b-col>
         <b-col xl="9" lg="9" md="9" sm="9">
           <h6 class="mb-0">OO_Seth</h6>
-          <p class="text-sm text-muted mb-0">5 min ago</p>
+          <p class="text-sm text-muted mb-0">{{event.createdAt | moment("from", "now")}}</p>
         </b-col>
         <b-col
           xl="2"
@@ -31,40 +31,43 @@
     </b-container>
     <b-container>
       <b-row>
+        
         <p
           class="pt-3 pb-3"
           style="margin-bottom: 0px; color: #1fc5b9; font-weight: 700"
         >
-          Blog
+          Event
         </p>
+       </b-row>
+       <b-row>
         <p class="h5">
-          Project X Change presents, A Visual Poem In Collaboration with, The
-          Stephen Lawrence Day Foundation
-        </p>
+          {{event.title}}
+        </p>      
         <p>
-          In collaboration with Pineapple School for performancing Arts, We will
-          encourage young writers of underrepresented backgrounds in the London
-          area, to write a piece that speaks to the important of equality for
-          all
+          {{event.eventDetails.slice(0, 200)}}....
         </p>
       </b-row>
     </b-container>
     <b-container>
       <b-embed
-        type="video"
+      v-if="event.eventVideoUrl"
+        type="iframe"
         aspect="16by9"
         controls
-        poster="https://insaneimpact.com/wp-content/uploads/2019/10/16-9-Formula.jpg"
+        poster=""
+        :src="event.eventVideoUrl"
+        allowfullscreen
       >
         <source
-          src="https://d1aettbyeyfilo.cloudfront.net/GenesisDigital/7865226_1581299091799WJ_4.0_VSL_v03.mp4?v=0"
+          :src="event.eventVideoUrl"
           type="video/webm"
         />
         <source
-          src="https://d1aettbyeyfilo.cloudfront.net/GenesisDigital/7865226_1581299091799WJ_4.0_VSL_v03.mp4?v=0"
+          :src="event.eventVideoUrl"
           type="video/mp4"
         />
       </b-embed>
+      <b-img v-else-if="!event.eventVideoUrl"  :src="event.eventBannerUrl" fluid alt="Responsive image"></b-img>
     </b-container>
     <br />
     <b-container>
@@ -80,7 +83,7 @@
             class="text-sm text-muted mb-2"
             style="font-size: 13px; padding: 0px"
           >
-            You and 207 peoples live this
+            You and {{event.likeCount || 0}} peoples like this
           </p>
         </b-col>
         <b-col lg="1" md="" sm="" cols="" style="font-size: 20px">

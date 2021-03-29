@@ -6,7 +6,7 @@
           <a href="javascript:;" class="avatar avatar-xl rounded-circle">
             <img
               alt="Image placeholder"
-              src="@/assets/images/image/Ellipse -82.png"
+              :src="entry.hostLogo || 'https://firebasestorage.googleapis.com/v0/b/arttest-60d83.appspot.com/o/default.jpg?alt=media&token=50b822cf-aedc-4d98-bfc6-2ad318739ee9'"
             />
           </a>
         </b-col>

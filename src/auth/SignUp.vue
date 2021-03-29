@@ -441,7 +441,7 @@ export default {
         this.newUserData.month_selected +
         "/" +
         this.newUserData.year_selected;
-      // this.$store.dispatch('signUpUser', this.newUserData);
+      this.$store.dispatch('signUpUser', this.newUserData);
       // console.log(this.newUserData.date_selected +'/'+ this.newUserData.month_selected +'/'+ this.newUserData.year_selected)
       this.modalShow = true;
       console.log(this.newUserData.username);

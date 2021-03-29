@@ -11,6 +11,8 @@ import {
 
 import axios from 'axios';
 import config from '@/config/config'
+import { db } from '@/db'
+const dbEvents = db.collection('events')
 
 export const eventModule = {
 
@@ -67,12 +69,14 @@ export const eventModule = {
     },
 
     actions: {
-      async  getAllEvents({ commit }) {
-          await axios.get(`${config.prodUrlEndpoint}/events`)
-            .then((res) => {
-                commit('SET_EVENTS', res.data)
-            })
-            .catch((err) => console.log(err));
+        getAllEvents({ commit }) {
+          dbEvents.orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
+            var eventsData = [];
+            querySnapshot.forEach(doc => {
+              eventsData.push(doc.data());
+            });
+            commit('SET_EVENTS', eventsData)
+          })
         },
         getEventData({ commit }, eventId) {
             commit(LOADING_EVENTS);

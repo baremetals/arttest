@@ -13,6 +13,8 @@ import {
 
 import axios from 'axios';
 import config from '@/config/config'
+import { db } from '@/db'
+const dbEntries = db.collection('submissions')
 
 export const entryModule = {
 
@@ -84,12 +86,14 @@ export const entryModule = {
     },
 
     actions: {
-      getAllContestEntries( { commit }) {
-        axios.get(`${config.prodUrlEndpoint}/submissions`)
-            .then((res) => {
-                commit('SET_ENTRIES', res.data)
-            })
-            .catch((err) => console.log(err));
+      getAllContestEntries({ commit }) {
+        dbEntries.orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
+          var entriesData = [];
+          querySnapshot.forEach(doc => {
+            entriesData.push(doc.data());
+          });
+          commit('SET_ENTRIES', entriesData)
+        })
       },
       getEntryData({ commit }, entryId) {
         commit(LOADING_ENTRIES);

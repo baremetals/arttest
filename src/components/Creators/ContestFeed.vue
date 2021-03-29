@@ -7,13 +7,13 @@
           <a href="javascript:;" class="avatar avatar-xl rounded-circle">
             <img
               alt="Image placeholder"
-              src="@/assets/images/image/Ellipse -82.png"
-            />
+              :src="contest.hostLogo || 'https://firebasestorage.googleapis.com/v0/b/arttest-60d83.appspot.com/o/logo.svg?alt=media&token=4aa3ca2a-470c-4f1c-8fd2-296861a66243'"
+            />          
           </a>
         </b-col>
         <b-col xl="9" lg="9" md="9" sm="9">
-          <h6 class="mb-0">OO_Seth</h6>
-          <p class="text-sm text-muted mb-0">5 min ago</p>
+          <h6 class="mb-0">{{contest.hostName}}</h6>
+          <p class="text-sm text-muted mb-0">{{contest.createdAt | moment("from", "now")}}</p>
         </b-col>
         <b-col
           xl="2"
@@ -40,7 +40,7 @@
           style="text-align: left; padding-left: 0px"
         >
           <b-icon icon="instagram" scale="1.5"></b-icon
-          ><span class="att-font-700 att-pl-10 att-pb-20"> ContestCard</span>
+          ><span style="margin-bottom: 0px; color: #1fc5b9; font-weight: 700" class="att-font-700 att-pl-10 att-pb-20"> ContestCard</span>
         </b-col>
       </b-row>
       <b-row>
@@ -53,21 +53,26 @@
       </b-row>
     </b-container>
     <b-container>
+      
       <b-embed
-        type="video"
+      v-if="contest.contestVideoUrl"
+        type="iframe"
         aspect="16by9"
         controls
-        poster="https://insaneimpact.com/wp-content/uploads/2019/10/16-9-Formula.jpg"
+        poster=""
+        :src="contest.contestVideoUrl"
+        allowfullscreen
       >
         <source
-          src="https://d1aettbyeyfilo.cloudfront.net/GenesisDigital/7865226_1581299091799WJ_4.0_VSL_v03.mp4?v=0"
+          :src="contest.contestVideoUrl"
           type="video/webm"
         />
         <source
-          src="https://d1aettbyeyfilo.cloudfront.net/GenesisDigital/7865226_1581299091799WJ_4.0_VSL_v03.mp4?v=0"
+          :src="contest.contestVideoUrl"
           type="video/mp4"
         />
       </b-embed>
+      <b-img v-else-if="!contest.contestVideoUrl"  :src="contest.contestBannerUrl" fluid alt="Responsive image"></b-img>
     </b-container>
     <br />
     <b-container>
@@ -84,7 +89,7 @@
             class="text-sm text-muted mb-2"
             style="font-size: 13px; padding: 0px"
           >
-            You and 207 peoples live this
+            You and {{contest.likeCount || 0}} peoples like this
           </p>
         </b-col>
         <b-col lg="1" md="" sm="" cols="" style="font-size: 20px">
@@ -113,7 +118,7 @@ export default {
   name: 'ContestCard',
   props: ['contest'],
   computed: {
-  
+    
   }
 };
 </script>

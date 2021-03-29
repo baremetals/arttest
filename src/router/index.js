@@ -20,9 +20,9 @@ import ContestEntry from '@/views/ContestEntry.vue'
 import ResCompanyProfile from '@/views/ResCompanyProfile.vue'
 import CompanyProfile2 from '@/views/CompanyProfile2.vue'
 import ResCreatorProfile from '@/views/ResCreatorProfile.vue'
-import Inbox from '@/components/Inbox.vue'
+import UserInbox from '@/components/UserInbox.vue'
 
-import Setting from '@/components/Setting.vue'
+import UserSetting from '@/components/UserSetting.vue'
 import NotFound from '@/views/NotFoundPage.vue'
 import StaticUserProfile from '@/views/StaticUserProfile.vue'
 import StaticBrandProfile from '@/views/StaticBrandProfile.vue'
@@ -150,14 +150,14 @@ const routes = [
   {
     path: '/inbox',
     name: 'Inbox',
-    component: Inbox
+    component: UserInbox
   },
   
   
   {
     path: '/support',
     name: 'Support',
-    component: Setting
+    component: UserSetting
   },
 
   //Footer Routes

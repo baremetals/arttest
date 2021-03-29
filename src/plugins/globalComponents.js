@@ -1,18 +1,17 @@
-import BaseInput from '@/components/Inputs/BaseInput.vue';
-import BaseDropdown from '@/components/uselessFiles/BaseDropdown.vue';
+import BaseInput from '@/components/GlobalFiles/Inputs/BaseInput.vue';
+import BaseDropdown from '@/components/GlobalFiles/BaseDropdown.vue';
 import Card from '@/components/Cards/Card.vue';
 import Modal from '@/components/Modal.vue';
 import StatsCard from '@/components/Cards/StatsCard.vue';
-import BaseButton from '@/components/uselessFiles/BaseButton.vue';
-import Badge from '@/components/uselessFiles/Badge.vue';
-// import BaseCheckbox from '@/components/Inputs/BaseCheckbox.vue';
-import BaseRadio from "@/components/Inputs/BaseRadio";
-import BaseProgress from "@/components/uselessFiles/BaseProgress";
-import BasePagination from "@/components/uselessFiles/BasePagination";
-import BaseAlert from "@/components/uselessFiles/BaseAlert";
+import BaseButton from '@/components/GlobalFiles/BaseButton.vue';
+import Badge from '@/components/GlobalFiles/Badge.vue';
+import BaseRadio from "@/components/GlobalFiles/Inputs/BaseRadio";
+import BaseProgress from "@/components/GlobalFiles/BaseProgress";
+import BasePagination from "@/components/GlobalFiles/BasePagination";
+import BaseAlert from "@/components/GlobalFiles/BaseAlert";
 import BaseNav from "@/components/Navbar/BaseNav";
-import BaseHeader from '@/components/uselessFiles/BaseHeader';
-import { ValidationProvider, ValidationObserver } from 'vee-validate';
+import BaseHeader from '@/components/GlobalFiles/BaseHeader';
+
 import { Input, Tooltip, Popover } from 'element-ui';
 import vue2Dropzone from 'vue2-dropzone';
 /**
@@ -24,7 +23,6 @@ const GlobalComponents = {
     Vue.component(Badge.name, Badge);
     Vue.component(BaseAlert.name, BaseAlert);
     Vue.component(BaseButton.name, BaseButton);
-    // Vue.component(BaseCheckbox.name, BaseCheckbox);
     Vue.component(BaseHeader.name, BaseHeader);
     Vue.component(BaseInput.name, BaseInput);
     Vue.component(BaseDropdown.name, BaseDropdown);
@@ -36,8 +34,6 @@ const GlobalComponents = {
     Vue.component(Modal.name, Modal);
     Vue.component(StatsCard.name, StatsCard);
     Vue.component(Input.name, Input);
-    Vue.component('validation-provider', ValidationProvider)
-    Vue.component('validation-observer', ValidationObserver)
     Vue.use(Tooltip);
     Vue.use(Popover);
     Vue.component(vue2Dropzone);
