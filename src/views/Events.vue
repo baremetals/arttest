@@ -17,34 +17,27 @@
       Current | <a style="color: #000;" href="#">Events</a>
     </h4>
     <div class="overflow-auto">
+      <b-row id="event-card">
+        <b-col sm="12" md="6" lg="4" xl="3" :key="index" v-for="(event, index) in paginatedItems">
+          <div class="att-pb-20">
+            <EventsCard
+              :event="event"
+            />
+          </div>
+        </b-col>
+      </b-row>  
       <b-row>
-      <b-col
-      sm="12"
-      md="6"
-      lg="4"
-      xl="3"
-      v-for="contest in contests"
-      v-bind:key="contest.id"
-    >
-      <div class="att-pb-20">
-      <EventsCard 
-      id="event-card" 
-      :items="contests"
-      :contest="contest"
-      :per-page="perPage"
-      :current-page="currentPage" 
-      />
-      </div>
-    </b-col>
-    </b-row>
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="event-card"
-    ></b-pagination>
-    </div>
-    
+        <b-col md="6" class="my-1">
+          <b-pagination
+            @change="onPageChanged"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            v-model="currentPage"
+            class="my-0"
+          />
+        </b-col>
+      </b-row>
+    </div>    
   </b-container>
   </div>
 </template>
@@ -60,17 +53,32 @@ export default {
   },
   data() {
     return {
-      perPage: 1,
+      paginatedItems: [],
       currentPage: 1,
-      items: ["contests"],
+      perPage: 4
     };
   },
   computed: {
-    ...mapGetters(["contests"]),
-    rows() {
-        return this.items.length
-      }
+    ...mapGetters({items: 'events'}),
+    totalRows () {
+      return this.items.length
+    }
   },
+  methods: {
+    paginate(page_size, page_number) {
+      let itemsToParse = this.items;
+      this.paginatedItems = itemsToParse.slice(
+        page_number * page_size,
+        (page_number + 1) * page_size
+      );
+    },
+    onPageChanged(page) {
+      this.paginate(this.perPage, page - 1);
+    }
+  },
+  mounted() {
+    this.paginate(this.perPage, 0);
+  }
 };
 </script>
 
