@@ -19,10 +19,10 @@
           <b-row class="justify-content-center">
             <b-col class="att-form" lg="11" md="11">
               <div>
-                <b-tabs content-class="mt-3" fill>
+                <b-tabs @input="changeTab" content-class="mt-3" fill>
                   <b-tab class="active-tab-class" title="Sign Up">
                     <!-- REGISTRTION SECTION START -->
-                    <ValidationObserver ref="observer">
+                    <ValidationObserver ref="signupObserver">
                       <b-form
                         slot-scope="{ validate }"
                         @submit.prevent="validate().then(onRegister)"
@@ -49,7 +49,7 @@
                               type="email"
                               placeholder="Email Address"
                             ></b-form-input>
-                            <b-form-invalid-feedback id="inputLiveFeedback">
+                            <b-form-invalid-feedback>
                               {{ errors[0] }}
                             </b-form-invalid-feedback>
                           </b-form-group>
@@ -72,7 +72,7 @@
                               type="text"
                               placeholder="Username"
                             ></b-form-input>
-                            <b-form-invalid-feedback id="inputLiveFeedback">
+                            <b-form-invalid-feedback>
                               {{ errors[0] }}
                             </b-form-invalid-feedback>
                           </b-form-group>
@@ -111,22 +111,24 @@
                             ></b-col>
                           </b-row>
                         </b-form-group>
-
-                        <ValidationProvider name="dobCheck" rules="required">
+                        
+                        <ValidationProvider name="dobCheck" :rules="{ required: { allowFalse: false } }" v-if="showDobChcekBox">
                           <b-form-group
                             slot-scope="{ valid, errors }"
                             id="confirmDob-group"
                           >
                             <b-form-checkbox
                               v-model="newUserData.dobCheck"
-                              :state="errors[0] ? false : valid ? true : null"
-                              id="confirmDob"
-                              v-if="showDobChcekBox"
-                              value="dobConfirmed"
-                              class="arttest"
+                              id="confirmDob"                              
+                              :checked="newUserData.dobCheck"
+                              :state="errors[0] ? false : (valid ? true : null)"
+                              @change="checkchanged"
                               >Please confirm you have parental
                               consent</b-form-checkbox
                             >
+                            <b-form-invalid-feedback>
+                              {{ errors[0] }}
+                            </b-form-invalid-feedback>
                           </b-form-group>
                         </ValidationProvider>
                         <ValidationProvider
@@ -147,7 +149,7 @@
                               placeholder="Enter Password"
                             >
                             </b-form-input>
-                            <b-form-invalid-feedback id="inputLiveFeedback">
+                            <b-form-invalid-feedback>
                               {{ errors[0] }}
                             </b-form-invalid-feedback>
                           </b-form-group>
@@ -168,7 +170,7 @@
                               type="password"
                               placeholder="Confirm Password"
                             ></b-form-input>
-                            <b-form-invalid-feedback id="inputLiveFeedback">
+                            <b-form-invalid-feedback>
                               {{ errors[0] }}
                             </b-form-invalid-feedback>
                           </b-form-group>
@@ -185,7 +187,8 @@
                             <b-form-checkbox
                               value="acceptedTerms"
                               v-model="newUserData.terms"
-                              :state="errors[0] ? false : valid ? true : null"
+                              :state="errors[0] ? false : (valid ? true : null)"
+                              @change="checkterms"
                               id="terms"
                               ><p class="prtxt">
                                 By clicking Sign Up, you agree to our
@@ -226,7 +229,7 @@
                   <!-- LOGIN SECTION START -->
 
                   <b-tab title="Login">
-                    <ValidationObserver ref="observer">
+                    <ValidationObserver ref="loginObserver">
                       <b-form
                         slot-scope="{ validate }"
                         @submit.prevent="validate().then(onLogin)"
@@ -247,7 +250,7 @@
                               placeholder="Enter email"
                             >
                             </b-form-input>
-                            <b-form-invalid-feedback id="inputLiveFeedback">
+                            <b-form-invalid-feedback>
                               {{ errors[0] }}
                             </b-form-invalid-feedback>
                           </b-form-group>
@@ -266,7 +269,7 @@
                               placeholder="Enter pasword"
                             >
                             </b-form-input>
-                            <b-form-invalid-feedback id="inputLiveFeedback">
+                            <b-form-invalid-feedback>
                               {{ errors[0] }}
                             </b-form-invalid-feedback>
                           </b-form-group>
@@ -368,7 +371,7 @@ import {
   month_options,
   year_options,
 } from "@/utils/DateSelector.js";
-
+import moment from 'moment';
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "SignUp-Page",
@@ -376,11 +379,8 @@ export default {
 
   },
   computed: {
-    generalError() {
-      return this.$store.getters.generalError;
-    },
-    ...mapActions(["signUpUser", "loginUser"]),
-    ...mapGetters(["getLoading"]),
+    ...mapActions(["signUpUser", "loginUser", "resetGeneralError"]),
+    ...mapGetters(["getLoading", "generalError"])
   },
   data() {
     return {
@@ -390,8 +390,8 @@ export default {
         dateOfBirth: "",
         password: "",
         confirmPassword: "",
-        dobCheck: false,
-        terms: true,
+        dobCheck: null,
+        terms: null,
         date_selected: null,
         month_selected: null,
         year_selected: null,
@@ -412,16 +412,26 @@ export default {
     };
   },
   methods: {
+    changeTab() {
+      if (this.generalError) { // Reset errors from vuex
+        this.$store.dispatch('resetGeneralError')
+      }
+    },
+    checkchanged() {      
+      this.newUserData.dobCheck = this.newUserData.dobCheck ? true : null
+    },
+    checkterms() {
+      this.newUserData.terms = this.newUserData.terms ? true : null
+    },
     dobCheck() {
       const birthYear = parseInt(this.newUserData.year_selected)
-      const currentYear = 2021
+      const currentYear = moment().year()
       const underAge = currentYear - birthYear
       if (underAge < 16) {
-        this.showDobChcekBox = true;
-        console.log('you must check this');
-      } else (console.log('you are fine', underAge))
-      
-
+        this.showDobChcekBox = true
+      } else {
+        this.showDobChcekBox = false;
+      }    
     },
     resetForm() {
       this.newUserData.email = "";
@@ -432,25 +442,28 @@ export default {
       this.newUserData.month_selected = null;
       this.newUserData.year_selected = null;
     },
-    onRegister() {
-      this.loading = true;
-      this.disabled = true;
-      this.newUserData.dateOfBirth =
+    async onRegister() {      
+      const isValid = await this.$refs.signupObserver.validate();
+      if (isValid) {
+        this.loading = true;
+        this.disabled = true;
+        this.newUserData.dateOfBirth =
         this.newUserData.date_selected +
         "/" +
         this.newUserData.month_selected +
         "/" +
         this.newUserData.year_selected;
-      this.$store.dispatch('signUpUser', this.newUserData);
-      // console.log(this.newUserData.date_selected +'/'+ this.newUserData.month_selected +'/'+ this.newUserData.year_selected)
-      this.modalShow = true;
-      console.log(this.newUserData.username);
-      this.loading = false;
-      this.disabled = false;
-      this.resetForm()
+        this.$store.dispatch('signUpUser', this.newUserData);
+        // console.log(this.newUserData.date_selected +'/'+ this.newUserData.month_selected +'/'+ this.newUserData.year_selected)
+        this.modalShow = true;
+        console.log(this.newUserData.username);
+        this.loading = false;
+        this.disabled = false;
+        this.resetForm()
+      }      
     },
     async onLogin() {
-      const isValid = await this.$refs.observer.validate();
+      const isValid = await this.$refs.loginObserver.validate();
 
       if (!isValid) {
         console.log("it's not valid")
@@ -458,21 +471,22 @@ export default {
       } else {
         this.loading = true;
         this.disabled = true;
-        // console.log("it's valid");
-        this.$store.dispatch('loginUser', this.userData);
-        // console.log(this.userData.email + " signed in with password " + this.userData.password);
-        this.userData.email = "";
-        this.userData.password = "";
-        this.$bvToast.toast("You are logged in", {
-          title: "welcome",
-          autoHideDelay: 5000,
-          variant: "info",
-          solid: true,
-          name: "b-toaster-top-center",
-        });
+        let response = await this.$store.dispatch('loginUser', this.userData);
         this.loading = false;
         this.disabled = false;
-        this.$router.push('/creator-profile')
+        if (response) {
+          // console.log(this.userData.email + " signed in with password " + this.userData.password);
+          this.userData.email = "";
+          this.userData.password = "";
+          this.$bvToast.toast("You are logged in", {
+            title: "welcome",
+            autoHideDelay: 5000,
+            variant: "info",
+            solid: true,
+            name: "b-toaster-top-center",
+          });
+          this.$router.push('/creator-profile')
+        }        
       }
       // try {
       //   // this.loading = true;

@@ -1,13 +1,13 @@
 import '@babel/polyfill'
 import 'mutationobserver-shim'
-import VueRouter from 'vue-router'
+
 import Vue from 'vue'
 import './plugins/bootstrap-vue'
 import App from './App.vue'
 import './assets/icons.js'
-import Router from './router'
+import { router } from './router'
 import '@/assets/globalStyles.css'
-import store from './store'
+import { store } from './store'
 import Dayjs from 'vue-dayjs';
 import VueSocialSharing from 'vue-social-sharing'
 import VueCountdownTimer from 'vuejs-countdown-timer';
@@ -22,7 +22,7 @@ import config from '@/config/config';
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.config.productionTip = false
-Vue.use(VueRouter)
+
 Vue.use(VeeValidate, {
   inject: false,
   classes: true,
@@ -64,13 +64,8 @@ if (token) {
   }
 }
 
-const router = new VueRouter({
-  routes: Router,
-  mode: 'history'
-})
-
 new Vue({
   render: h => h(App),
   store,
-  router: router
+  router,
 }).$mount('#app')
