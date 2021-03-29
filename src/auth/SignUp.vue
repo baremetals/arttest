@@ -19,7 +19,7 @@
           <b-row class="justify-content-center">
             <b-col class="att-form" lg="11" md="11">
               <div>
-                <b-tabs content-class="mt-3" fill>
+                <b-tabs @input="changeTab" content-class="mt-3" fill>
                   <b-tab class="active-tab-class" title="Sign Up">
                     <!-- REGISTRTION SECTION START -->
                     <ValidationObserver ref="signupObserver">
@@ -379,11 +379,8 @@ export default {
 
   },
   computed: {
-    generalError() {
-      return this.$store.getters.generalError;
-    },
-    ...mapActions(["signUpUser", "loginUser"]),
-    ...mapGetters(["getLoading"])
+    ...mapActions(["signUpUser", "loginUser", "resetGeneralError"]),
+    ...mapGetters(["getLoading", "generalError"])
   },
   data() {
     return {
@@ -415,6 +412,11 @@ export default {
     };
   },
   methods: {
+    changeTab() {
+      if (this.generalError) { // Reset errors from vuex
+        this.$store.dispatch('resetGeneralError')
+      }
+    },
     checkchanged() {      
       this.newUserData.dobCheck = this.newUserData.dobCheck ? true : null
     },
@@ -451,7 +453,7 @@ export default {
         this.newUserData.month_selected +
         "/" +
         this.newUserData.year_selected;
-        // this.$store.dispatch('signUpUser', this.newUserData);
+        this.$store.dispatch('signUpUser', this.newUserData);
         // console.log(this.newUserData.date_selected +'/'+ this.newUserData.month_selected +'/'+ this.newUserData.year_selected)
         this.modalShow = true;
         console.log(this.newUserData.username);
@@ -469,21 +471,22 @@ export default {
       } else {
         this.loading = true;
         this.disabled = true;
-        // console.log("it's valid");
-        this.$store.dispatch('loginUser', this.userData);
-        // console.log(this.userData.email + " signed in with password " + this.userData.password);
-        this.userData.email = "";
-        this.userData.password = "";
-        this.$bvToast.toast("You are logged in", {
-          title: "welcome",
-          autoHideDelay: 5000,
-          variant: "info",
-          solid: true,
-          name: "b-toaster-top-center",
-        });
+        let response = await this.$store.dispatch('loginUser', this.userData);
         this.loading = false;
         this.disabled = false;
-        this.$router.push('/creator-profile')
+        if (response) {
+          // console.log(this.userData.email + " signed in with password " + this.userData.password);
+          this.userData.email = "";
+          this.userData.password = "";
+          this.$bvToast.toast("You are logged in", {
+            title: "welcome",
+            autoHideDelay: 5000,
+            variant: "info",
+            solid: true,
+            name: "b-toaster-top-center",
+          });
+          this.$router.push('/creator-profile')
+        }        
       }
       // try {
       //   // this.loading = true;

@@ -147,10 +147,12 @@ export const authModule = {
     },
 
     actions: {
-
+        resetGeneralError({ commit }) {
+            commit(SET_GENERAL_ERROR, "")
+        },
         async loginUser({ commit, dispatch }, userData) {
             commit(LOADING_UI)
-            await axios.post(`${config.prodUrlEndpoint}/signin`, userData)
+            return await axios.post(`${config.prodUrlEndpoint}/signin`, userData)
                 .then((res) => {
                     const FBIdToken = res.data.token
                     localStorage.setItem('FBIdToken', FBIdToken);
@@ -159,10 +161,12 @@ export const authModule = {
                     axios.defaults.headers.common['Authorization'] = "Bearer " + FBIdToken;
                     dispatch('getUserData')
                     commit(CLEAR_ERRORS)
+                    return true
                     // this.$router.push("/creator-profile");
                 })
                 .catch((err) => {
                     commit(SET_GENERAL_ERROR, err.response)
+                    return false
                 })
         },
         async signUpUser({ commit }, newUserData) {
