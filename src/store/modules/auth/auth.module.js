@@ -21,7 +21,8 @@ import {
     UNLIKE_AN_ENTRY,
     LIKE_AN_ENTRY,
     ENTRY_VOTE,
-    SET_AN_ENTRY
+    SET_AN_ENTRY,
+    SET_USERS_TIMELINE
 } from '@/store/MutationTypes';
 
 import axios from 'axios';
@@ -184,6 +185,7 @@ export const authModule = {
             delete axios.defaults.headers.common['Authorization']
             commit(SET_UNAUTHENTICATED)
             commit(SET_USER, {})
+            commit(SET_USERS_TIMELINE, {})
         },
         async getUserData({ commit }) {
             commit(LOADING_USER)
@@ -289,8 +291,7 @@ export const authModule = {
         eventLikes: state => state.eventLikes,
         entryVotes: state => state.entryVotes,
         authenticated: state => state.authenticated,
-        userData: state => state.credentials
-        
+        userData: state => state.credentials,
 
            
         

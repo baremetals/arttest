@@ -13,10 +13,14 @@ import {
 
 import axios from 'axios';
 import config from '@/config/config';
-
+import { db } from '@/db'
+// const userId = getUserDetails.credentials.userId
+// const dbTimelines = db.collection('users').doc('1D2QVC7SwaOaY3Ow5fDlyZK3vKM2').collection('timeline')
+// const userId = db.auth;
+// const dbTimelines = db.collection(`/users/${userId}/timeline`)
+const dbTimelines = db.collection('users')
 
 export const usersModule = {
-
     state: {
         loading: false,
         users: [],
@@ -70,7 +74,18 @@ export const usersModule = {
 
     },
 
-    actions: {       
+    actions: {  
+        getTimeline({ commit, rootState }) {
+            console.log('rootState', rootState)
+            dbTimelines.orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
+              var timelineData = [];
+              querySnapshot.forEach(doc => {
+                timelineData.push(doc.data());
+              });
+              commit('SET_USERS_TIMELINE', timelineData)
+            })
+        },
+
         async getAllUsers({ commit }) {
             commit(LOADING_ALL_USERS)
             await axios
@@ -116,16 +131,11 @@ export const usersModule = {
                 commit(SET_ENTRIES, null);
               });
         },
-        // getTimelineData({ commit }) {
-        //     let timeline = [];
-        //     const posts = this.$store.state.events
-        //     timeline.push(posts)
-        //     commit(SET_USERS_TIMELINE, timeline)
-        // }
     },
      getters: {
         getUsers: state => state.users,
         getUserDetails: state => state.userDetails,
+        timelines: state => state.timeline,
     }
 
 };

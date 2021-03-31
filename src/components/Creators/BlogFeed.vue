@@ -6,13 +6,13 @@
           <a href="javascript:;" class="avatar avatar-xl rounded-circle">
             <img
               alt="Image placeholder"
-              :src="post.authorImg || 'https://firebasestorage.googleapis.com/v0/b/arttest-60d83.appspot.com/o/logo.svg?alt=media&token=4aa3ca2a-470c-4f1c-8fd2-296861a66243'"
+              :src="timeline.authorImg || 'https://firebasestorage.googleapis.com/v0/b/arttest-60d83.appspot.com/o/logo.svg?alt=media&token=4aa3ca2a-470c-4f1c-8fd2-296861a66243'"
             />
           </a>
         </b-col>
         <b-col xl="9" lg="9" md="9" sm="9">
-          <h6 class="mb-0">{{post.author}}</h6>
-          <p class="text-sm text-muted mb-0">{{post.createdAt | moment("from", "now")}}</p>
+          <h6 class="mb-0">{{timeline.author}}</h6>
+          <p class="text-sm text-muted mb-0">{{timeline.createdAt | moment("from", "now")}}</p>
         </b-col>
         <b-col
           xl="2"
@@ -45,33 +45,32 @@
       </b-row>
       <b-row>
         <p class="h5">
-          {{post.title}}
+          {{timeline.title}}
         </p>
         <p>
-          {{post.shortDescription.slice(0,200)}}....
+          {{timeline.shortDescription.slice(0,200)}}....
         </p>
       </b-row>
     </b-container>
     <b-container>
       <b-embed
-      v-if="post.embededVideoLink"
+      v-if="timeline.embededVideoLink"
         type="iframe"
         aspect="16by9"
         controls
-        poster=""
-        :src="post.embededVideoLink"
+        :src="timeline.embededVideoLink"
         allowfullscreen
       >
         <source
-          :src="post.embededVideoLink"
+          :src="timeline.embededVideoLink"
           type="video/webm"
         />
         <source
-          :src="post.embededVideoLink"
+          :src="timeline.embededVideoLink"
           type="video/mp4"
         />
       </b-embed>
-      <b-img v-else-if="!post.embededVideoLink"  :src="post.bannerUrl" fluid alt="Responsive image"></b-img>
+      <b-img v-else-if="!timeline.embededVideoLink"  :src="timeline.bannerUrl" fluid alt="Responsive image"></b-img>
     </b-container>
     <br />
     <b-container>
@@ -88,7 +87,7 @@
             class="text-sm text-muted mb-2"
             style="font-size: 13px; padding: 0px"
           >
-            You and {{post.likeCount}} peoples like this
+            You and {{timeline.likeCount}} peoples like this
           </p>
         </b-col>
         <b-col lg="1" md="" sm="" cols="" style="font-size: 20px">
@@ -113,7 +112,7 @@
 <script>
 export default {
   name: 'BlogCard',
-  props: ['post']
+  props: ['timeline']
 };
 </script>
 

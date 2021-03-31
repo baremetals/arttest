@@ -7,13 +7,13 @@
           <a href="javascript:;" class="avatar avatar-xl rounded-circle">
             <img
               alt="Image placeholder"
-              :src="contest.hostLogo || 'https://firebasestorage.googleapis.com/v0/b/arttest-60d83.appspot.com/o/logo.svg?alt=media&token=4aa3ca2a-470c-4f1c-8fd2-296861a66243'"
+              :src="timeline.hostLogo || 'https://firebasestorage.googleapis.com/v0/b/arttest-60d83.appspot.com/o/logo.svg?alt=media&token=4aa3ca2a-470c-4f1c-8fd2-296861a66243'"
             />          
           </a>
         </b-col>
         <b-col xl="9" lg="9" md="9" sm="9">
-          <h6 class="mb-0">{{contest.hostName}}</h6>
-          <p class="text-sm text-muted mb-0">{{contest.createdAt | moment("from", "now")}}</p>
+          <h6 class="mb-0">{{timeline.hostName}}</h6>
+          <p class="text-sm text-muted mb-0">{{timeline.createdAt | moment("from", "now")}}</p>
         </b-col>
         <b-col
           xl="2"
@@ -40,39 +40,39 @@
           style="text-align: left; padding-left: 0px"
         >
           <b-icon icon="instagram" scale="1.5"></b-icon
-          ><span style="margin-bottom: 0px; color: #1fc5b9; font-weight: 700" class="att-font-700 att-pl-10 att-pb-20"> ContestCard</span>
+          ><span style="margin-bottom: 0px; color: #1fc5b9; font-weight: 700" class="att-font-700 att-pl-10 att-pb-20"> {{timeline.contentType}}</span>
         </b-col>
       </b-row>
       <b-row>
         <p class="h5">
-          {{contest.title}}
+          {{timeline.title}}
         </p>
         <p>
-          {{contest.description.slice(0,200)}}....
+          {{timeline.description.slice(0,200)}}....
         </p>
       </b-row>
     </b-container>
     <b-container>
       
       <b-embed
-      v-if="contest.contestVideoUrl"
+      v-if="timeline.contestVideoUrl"
         type="iframe"
         aspect="16by9"
         controls
         poster=""
-        :src="contest.contestVideoUrl"
+        :src="timeline.contestVideoUrl"
         allowfullscreen
       >
         <source
-          :src="contest.contestVideoUrl"
+          :src="timeline.contestVideoUrl"
           type="video/webm"
         />
         <source
-          :src="contest.contestVideoUrl"
+          :src="timeline.contestVideoUrl"
           type="video/mp4"
         />
       </b-embed>
-      <b-img v-else-if="!contest.contestVideoUrl"  :src="contest.contestBannerUrl" fluid alt="Responsive image"></b-img>
+      <b-img v-else-if="!timeline.contestVideoUrl"  :src="timeline.contestBannerUrl" fluid alt="Responsive image"></b-img>
     </b-container>
     <br />
     <b-container>
@@ -89,7 +89,7 @@
             class="text-sm text-muted mb-2"
             style="font-size: 13px; padding: 0px"
           >
-            You and {{contest.likeCount || 0}} peoples like this
+            You and {{timeline.likeCount || 0}} peoples like this
           </p>
         </b-col>
         <b-col lg="1" md="" sm="" cols="" style="font-size: 20px">
@@ -116,7 +116,7 @@
   // import { mapGetters } from 'vuex';
 export default {
   name: 'ContestCard',
-  props: ['contest'],
+  props: ['timeline'],
   computed: {
     
   }

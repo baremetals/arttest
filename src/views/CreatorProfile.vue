@@ -242,19 +242,14 @@
           <b-row>
             <b-col>
               <b-row>
-                <div v-for="contest in contests" :key="contest.contestId">
-                  <ContestFeed :contest="contest" />
-                </div>
+                <div v-for="timeline in timelines" :key="timeline.timelineId">
+                  <ContestFeed :timeline="timeline" />
 
-                <div v-for="post in blogposts" :key="post.blogpostId">
-                  <BlogFeed :post="post" />
-                </div>
+                  <BlogFeed :timeline="timeline" />
 
-                <div>
                   <EntryFeed />
-                </div>
-                <div v-for="event in events" :key="event.eventId">
-                  <EventFeed :event="event" />
+
+                  <EventFeed :timeline="timeline" />
                 </div>
               </b-row>
             </b-col>
@@ -946,6 +941,7 @@ import BlogFeed from "@/components/Creators/BlogFeed.vue";
 import EventFeed from "@/components/Creators/EventFeed.vue";
 import ContestFeed from "@/components/Creators/ContestFeed.vue";
 import AdvertFeed from "@/components/Creators/AdvertFeed.vue";
+// import { db } from '@/db'
 export default {
   name: "Creator-Profile",
   components: {
@@ -1019,17 +1015,21 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["userData", "contests", "events", "blogposts"]),
+    ...mapGetters(["userData", "timelines"]),
     user() {
       return this.userData.credentials;
-
     },
-    // created() {
-    //   return timeline.push(this.contests);
-    // }, not needed
-
-    
+    // timelines() {
+    //   const dbTimelines = db.collection(`/users/${this.user.userId}/timeline`)
+    //   console.log(this.user.userId)
+    //   return this.$store.dispatch('getTimeline', dbTimelines)
+    // }
   },
+  // mounted() {
+  //   const dbTimelines = db.collection(`/users/${this.user.userId}/timeline`)
+  //   console.log(this.user.userId)
+  //   this.$store.dispatch('getTimeline', dbTimelines);
+  // }
 };
 </script>
  

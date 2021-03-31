@@ -14,6 +14,9 @@ import Header from '@/layouts/Header.vue'
 import Menu from '@/layouts/Menu.vue'
 import Footer from '@/layouts/Footer.vue'
 import { mapGetters } from "vuex";
+// let userData; 
+// import { db } from '@/db'
+
 export default {
   name: 'App',
   components: {
@@ -22,13 +25,18 @@ export default {
     Footer,
   },
   computed: {
-    ...mapGetters(['loggedInUser']),
+    ...mapGetters(['loggedInUser', 'userData']),
+    // userData () {
+    //   return this.userData.credentials;
+    // }
   },
   mounted() {
-    // if (this.$store.getters.authenticated) {
+    // const dbTimelines = db.collection(`/users/${this.userData.userId}/timeline`)
+    // this.$store.dispatch('getTimeline', dbTimelines);
+    if (this.loggedInUser) { 
       
-    //   this.$store.dispatch('getTimelineData');
-    // }
+      this.$store.dispatch('getTimeline');
+    }
     this.$store.dispatch('getAllEvents');
     this.$store.dispatch('getAllBlogPosts');
     this.$store.dispatch('getAllContests'); 
