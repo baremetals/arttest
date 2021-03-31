@@ -33,10 +33,6 @@ export default {
   mounted() {
     // const dbTimelines = db.collection(`/users/${this.userData.userId}/timeline`)
     // this.$store.dispatch('getTimeline', dbTimelines);
-    if (this.loggedInUser) { 
-      
-      this.$store.dispatch('getTimeline');
-    }
     this.$store.dispatch('getAllEvents');
     this.$store.dispatch('getAllBlogPosts');
     this.$store.dispatch('getAllContests'); 
