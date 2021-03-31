@@ -243,13 +243,13 @@
             <b-col>
               <b-row>
                 <div v-for="timeline in timelines" :key="timeline.timelineId">
-                  <ContestFeed :timeline="timeline" />
+                  <ContestFeed :timeline="timeline" v-if="timeline.contentType == 'Contest'" />
 
-                  <BlogFeed :timeline="timeline" />
+                  <BlogFeed :timeline="timeline" v-if="timeline.contentType == 'News & Insights'" />
 
-                  <EntryFeed />
+                  <EntryFeed :timeline="timeline" v-if="timeline.contentType == 'Entry'" />
 
-                  <EventFeed :timeline="timeline" />
+                  <EventFeed :timeline="timeline" v-if="timeline.contentType == 'Event'" />
                 </div>
               </b-row>
             </b-col>

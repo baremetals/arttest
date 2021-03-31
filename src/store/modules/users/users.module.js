@@ -14,11 +14,6 @@ import {
 import axios from 'axios';
 import config from '@/config/config';
 import { db } from '@/db'
-// const userId = getUserDetails.credentials.userId
-// const dbTimelines = db.collection('users').doc('1D2QVC7SwaOaY3Ow5fDlyZK3vKM2').collection('timeline')
-// const userId = db.auth;
-// const dbTimelines = db.collection(`/users/${userId}/timeline`)
-const dbTimelines = db.collection('users')
 
 export const usersModule = {
     state: {
@@ -75,9 +70,9 @@ export const usersModule = {
     },
 
     actions: {  
-        getTimeline({ commit, rootState }) {
-            console.log('rootState', rootState)
-            dbTimelines.orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
+        getTimeline({ commit, state }) {
+            const userId = state.userDetails.credentials.userId
+            db.collection(`/users/${userId}/timeline`).orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
               var timelineData = [];
               querySnapshot.forEach(doc => {
                 timelineData.push(doc.data());
