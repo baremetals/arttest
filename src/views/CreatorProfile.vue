@@ -1014,6 +1014,13 @@ export default {
       }
     },
   },
+  watch: {
+    userData () {
+      if(this.userData.credentials.userId) {
+        this.$store.dispatch('getTimeline');
+      }
+    }
+  },
   computed: {
     ...mapGetters(["userData", "timelines"]),
     user() {

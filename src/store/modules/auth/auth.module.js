@@ -291,9 +291,6 @@ export const authModule = {
         eventLikes: state => state.eventLikes,
         entryVotes: state => state.entryVotes,
         authenticated: state => state.authenticated,
-        userData: state => state.credentials,
-
-           
-        
+        userData: state => state.credentials
     }
 };
