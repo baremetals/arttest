@@ -40,7 +40,7 @@
           class="p-3"
           style="margin-bottom: 0px; color: #1fc5b9; font-weight: 700"
         >
-          Article
+          {{timeline.contentType}}
         </p>
       </b-row>
       <b-row>
