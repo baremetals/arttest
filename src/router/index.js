@@ -196,7 +196,7 @@ router.beforeEach((to, from, next) => {
   document.title = `Arrtest - ${to.name}`
   const loggedIn = store.state.authModule.authenticated
   router.options.routes.forEach((route) => {
-    if (!loggedIn && route.secure) {
+    if (!loggedIn && route.secure && to.name === route.name) {
       return next('/auth-signup')
     } else {
       next()
